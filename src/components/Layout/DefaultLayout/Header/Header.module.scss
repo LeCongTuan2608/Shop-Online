@@ -1,0 +1,29 @@
+.wrapper {
+   height: auto;
+   width: 100%;
+   display: flex;
+   padding: 10px 50px;
+   gap: 20%;
+
+   & .input-group {
+      max-width: 45%;
+      flex: 1;
+      box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 4px;
+      border-radius: 7px;
+   }
+   & .button {
+      background-color: var(--color-light-green);
+      border: none;
+   }
+   & .options {
+      flex: 1;
+      & > div {
+         display: flex;
+         justify-content: flex-end;
+         & #dropdown-basic-button {
+            display: flex;
+            justify-content: flex-end;
+         }
+      }
+   }
+}

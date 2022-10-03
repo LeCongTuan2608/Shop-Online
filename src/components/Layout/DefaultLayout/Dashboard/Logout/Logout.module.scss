@@ -1,0 +1,21 @@
+.logout {
+   width: 100%;
+   padding: 0 12px;
+   .nav-link {
+      width: 100%;
+      display: flex;
+      padding: 10px;
+      font-size: 15px;
+      color: var(--color-text-white);
+      align-items: center;
+      border-radius: 6px;
+      & svg {
+         margin-right: 15px;
+      }
+      &:hover {
+         background-color: var(--color-light-green);
+         color: var(--color-text-black);
+         transition: 0.5s;
+      }
+   }
+}

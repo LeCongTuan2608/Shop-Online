@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import DefaultLayout from 'components/Layout/DefaultLayout';
+import { Fragment } from 'react';
+import { Outlet, Route, Routes } from 'react-router-dom';
+import { adminRoutes, privateRoutes, publicRoutes } from './routes';
+import History from './History';
+// tao func check pathname thanwg nao se co header cho ra :y la ben kia
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+   return (
+      <div className="App">
+         <Routes history={History}>
+            <Route element={<DefaultLayout />}>
+               {/* route nảy của user nhưng chưa login */}
+               {publicRoutes.map((route, index) => {
+                  return <Route key={index} path={route.path} element={<route.component />} />;
+               })}
+               {/* route của admin khi login */}
+               {adminRoutes.map((route, index) => {
+                  return <Route key={index} path={route.path} element={<route.component />} />;
+               })}
+               {/*route này của user khi login vao  */}
+               {privateRoutes.map((route, index) => {
+                  return <Route key={index} path={route.path} element={<route.component />} />;
+               })}
+            </Route>
+         </Routes>
+      </div>
+   );
 }
-
 export default App;

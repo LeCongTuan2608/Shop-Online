@@ -1,0 +1,104 @@
+.wrapper {
+   flex: 1;
+   min-width: 150px;
+   max-width: 230px;
+   position: relative;
+   transition: ease-in-out 0.5s;
+}
+.navbar {
+   padding: 25px 0 25px 0 !important;
+   background-color: rgb(20, 24, 55);
+   height: 100%;
+   flex-direction: column;
+
+   & .user {
+      width: 100%;
+      padding: 5px 12px;
+      display: flex;
+      justify-content: space-between;
+      color: var(--color-text-white);
+      gap: 10px;
+      margin-bottom: 40px;
+
+      & .user-card {
+         & .card-img {
+            display: flex;
+            width: 43px;
+            height: 43px;
+            border-radius: 100rem;
+            font-size: 27px;
+            border: 3px solid white;
+            justify-content: center;
+            align-items: center;
+         }
+      }
+      & .info {
+         flex: 1 1 auto;
+         display: flex;
+         flex-direction: column;
+         overflow: hidden;
+         text-overflow: ellipsis;
+         justify-content: center;
+         & .info-email {
+            color: var(--color-dark-white);
+            font-style: italic;
+         }
+      }
+   }
+   & .container {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      justify-content: flex-start !important;
+      gap: 15px;
+   }
+   & .logout {
+      width: 100%;
+      padding: 0 12px;
+   }
+   .nav-link {
+      width: 100%;
+      display: flex;
+      padding: 10px;
+      font-size: 15px;
+      color: var(--color-text-white);
+      color: var();
+      align-items: center;
+      border-radius: 6px;
+
+      & svg {
+         margin-right: 15px;
+      }
+      & span {
+         flex: 1;
+         transition: ease-in-out 0.5s;
+      }
+      &:hover {
+         background-color: var(--color-light-green);
+         color: var(--color-text-black);
+         transition: 0.5s;
+      }
+   }
+}
+
+#active {
+   background-color: var(--color-light-green);
+   color: var(--color-text-black);
+   font-weight: 700;
+}
+.show-hide {
+   position: absolute;
+   top: 11%;
+   right: -5%;
+   z-index: 5;
+   border-radius: 100rem;
+   & button {
+      padding: 0;
+      border-radius: 10px;
+      border: none;
+      & svg {
+         font-size: 35px;
+      }
+      transition: ease-in-out 0.5s;
+   }
+}

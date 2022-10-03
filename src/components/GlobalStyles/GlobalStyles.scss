@@ -1,0 +1,27 @@
+@import 'normalize.css';
+:root {
+   --color-light-green: #d1f366;
+   --color-light-orange: #ec502c;
+   --color-dark-white: rgba(234, 234, 234, 0.86);
+   --color-light-black: rgba(88, 88, 88, 0.919);
+   --color-text-black: black;
+   --color-text-white: white;
+}
+html {
+   margin: 0;
+   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+      'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+   -webkit-font-smoothing: antialiased;
+   -moz-osx-font-smoothing: grayscale;
+   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+body {
+   font-size: 100%;
+   text-rendering: optimizeSpeed;
+   box-sizing: border-box;
+}
+.App {
+   height: 100vh;
+   width: 100%;
+   margin: 0;
+}
