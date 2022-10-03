@@ -72,6 +72,14 @@
                font-weight: 600;
                color: var(--color-light-orange);
                font-size: 20px;
+               display: flex;
+               align-items: center;
+               gap: 10px;
+               & input {
+                  font-style: italic;
+                  font-weight: 600;
+                  color: var(--color-light-orange);
+               }
             }
             & button {
                width: 40%;
@@ -88,6 +96,19 @@
 }
 .modal-backdrop {
    width: 100% !important;
+}
+
+.contents-input {
+   position: relative;
+}
+input {
+   border: none;
+   padding: 7px 0;
+   transition: 0.4s;
+   width: 100%;
+}
+.input-des {
+   border: none;
 }
 
 @media screen and(max-width: 991px) {

@@ -44,6 +44,7 @@ function Logout(props) {
          token: window.localStorage.removeItem('token'),
          infoUser: window.localStorage.removeItem('infoUser'),
       });
+      window.localStorage.removeItem('tokenType');
       navigate('/');
    };
 

@@ -15,9 +15,12 @@ const Product_API = {
       };
       return axiosClient.delete(url, config);
    },
-   update(data) {
-      const url = `products/update_product/${data.id}`;
-      return axiosClient.put(url, data);
+   update(data, id, token) {
+      const url = `products/update_product/${id}`;
+      const config = {
+         headers: { Authorization: `${token.tokenType} ${token.token}` },
+      };
+      return axiosClient.put(url, data, config);
    },
    getById(idProduct) {
       const url = `products/get_product/${idProduct}`;

@@ -60,7 +60,7 @@ function ProductPage(props) {
          {data ? (
             <div className={cln('product')}>
                {data.map((value, index) => {
-                  return <Product key={index} value={value} /> || <Skeleton />;
+                  return <Product key={index} value={value} />;
                })}
             </div>
          ) : (
