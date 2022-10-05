@@ -2,7 +2,7 @@ import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined';
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import ModalBuyProduct from '../ModalBuyProduct';
 import styles from './Product.module.scss';
@@ -23,7 +23,6 @@ const formatCash = (str) => {
 function Product(props) {
    const { value } = props;
    const [show, setShow] = useState(false);
-
    const token = window.localStorage.getItem('token');
    const userRole = JSON.parse(localStorage.getItem('infoUser'));
 

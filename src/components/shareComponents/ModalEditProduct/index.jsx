@@ -2,7 +2,7 @@ import Product_API from 'API/Product_API';
 import { categoryProduct } from 'Auth/CategorySlide';
 import classNames from 'classnames/bind';
 import { useEffect, useRef, useState } from 'react';
-import { Button, Form, Modal } from 'react-bootstrap';
+import { Alert, Button, Carousel, Form, Modal, Spinner } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import img_fix from '../../../images/Construction.png';
 import styles from './ModalEditProduct.module.scss';
@@ -31,14 +31,39 @@ function ModalEditProduct(props) {
    const [token, setToken] = useState();
    const [detailProduct, setDetailProduct] = useState(product);
    const [showError, setShowError] = useState(true);
+   const [newImage, setNewImage] = useState([]);
+   const [loading, setLoading] = useState(false);
+   const inputFile = useRef();
+   const inputName = useRef();
+   const inputDes = useRef();
+   const inputAmount = useRef();
+   const inputPrice = useRef();
+
+   /// xử lý xóa file preview để tránh tràn bộ nhớ
+   const revokeImage = () => {
+      newImage?.map((value) => {
+         return URL.revokeObjectURL(value.preview);
+      });
+   };
+   // ================load lại product==============
+   const handleReLoad = async () => {
+      const categoryid = window.localStorage.getItem('categoryid');
+      const categoryname = window.localStorage.getItem('categoryname');
+      const valueObj = {
+         categoryId: categoryid,
+         categoryName: categoryname,
+      };
+      if (categoryid == 0) {
+         await dispatch(categoryProduct(valueObj)).unwrap();
+      } else {
+         await dispatch(categoryProduct(valueObj)).unwrap();
+      }
+   };
+   //=================================================================
    useEffect(() => {
       // bug
       setDetailProduct(product);
    }, [product]);
-   const inputName = useRef(null);
-   const inputDes = useRef(null);
-   const inputAmount = useRef(null);
-   const inputPrice = useRef(null);
    useEffect(() => {
       const getToken = window.localStorage.getItem('token');
       const getTypeToken = window.localStorage.getItem('tokenType');
@@ -47,7 +72,11 @@ function ModalEditProduct(props) {
          tokenType: getTypeToken,
       });
    }, []);
-
+   useEffect(() => {
+      return () => {
+         revokeImage();
+      };
+   }, [newImage]);
    const handleBlur = (e) => {
       if (e.target.name === 'name') {
          if (e.target.value.trim() === '') {
@@ -80,64 +109,118 @@ function ModalEditProduct(props) {
          e.target.blur();
       }
    };
-   const handleReLoad = async () => {
-      const categoryid = window.localStorage.getItem('categoryid');
-      const categoryname = window.localStorage.getItem('categoryname');
-      const valueObj = {
-         categoryId: categoryid,
-         categoryName: categoryname,
-      };
-      if (categoryid == 0) {
-         await dispatch(categoryProduct(valueObj)).unwrap();
-      } else {
-         await dispatch(categoryProduct(valueObj)).unwrap();
-      }
-   };
+
    const handleDelete = async (e) => {
       try {
-         const response = await Product_API.delete(product.productId, token);
-         console.log(response);
+         setLoading(true);
+         await Product_API.delete(product.productId, token);
          handleReLoad();
+         revokeImage();
          handleHide(false);
+         setLoading(false);
       } catch (error) {
          console.log('error', error);
+         setLoading(false);
          setShowError(false);
       }
    };
 
    const handleUpdate = async (e) => {
-      console.log(detailProduct);
       const data = new FormData();
       data.append('name', detailProduct.productName);
       data.append('des', detailProduct.productDes);
       data.append('price', detailProduct.productPrice);
       data.append('amount', detailProduct.productAmount);
-      data.append('imageId', detailProduct.images[0].imageId);
+
+      if (newImage.length === 0) {
+         detailProduct.images.map((value) => {
+            return data.append('imageId', value.imageId);
+         });
+      } else {
+         newImage.map((value) => {
+            return data.append('imageFiles', value);
+         });
+      }
       try {
+         setLoading(true);
          await Product_API.update(data, detailProduct.productId, token);
          handleReLoad();
          handleHide(false);
+         revokeImage();
+         setLoading(false);
       } catch (error) {
          console.log('error', error);
+         setLoading(false);
       }
    };
 
+   const handleHideModal = () => {
+      revokeImage();
+      setNewImage([]);
+      handleHide();
+   };
    return (
       <Modal
          className={cln('wrapper')}
          show={show}
-         onHide={handleHide}
+         onHide={handleHideModal}
          backdrop="static"
          size="lg"
          aria-labelledby="contained-modal-title-vcenter"
          centered>
+         {loading && (
+            <div className={cln('loading')}>
+               <Spinner animation="grow" variant="info" />
+            </div>
+         )}
+
          <Modal.Header closeButton>
             <Modal.Title id="contained-modal-title-vcenter">Buy product</Modal.Title>
          </Modal.Header>
          <Modal.Body>
             <div className={cln('container')}>
                <div className={cln('container-img')}>
-                  <img src={detailProduct?.images[0]?.url || img_fix} alt="" />
+                  <Carousel>
+                     {newImage.length !== 0 ? (
+                        newImage?.map((value, index) => {
+                           value.preview = URL.createObjectURL(value);
+                           return (
+                              <Carousel.Item key={index}>
+                                 <img src={value?.preview || img_fix} alt="" />
+                              </Carousel.Item>
+                           );
+                        })
+                     ) : detailProduct.images.length === 0 ? (
+                        <img src={img_fix} alt="" />
+                     ) : (
+                        detailProduct?.images.map((value, index) => {
+                           return (
+                              <Carousel.Item key={index}>
+                                 <img src={value?.url || img_fix} alt="" />
+                              </Carousel.Item>
+                           );
+                        })
+                     )}
+                  </Carousel>
+                  <div className={cln('input_file')}>
+                     <input
+                        type="file"
+                        id="editFile"
+                        multiple="multiple"
+                        style={{ display: 'none' }}
+                        onChange={(e) => {
+                           setNewImage([...e.target.files]);
+                        }}
+                        ref={inputFile}
+                     />
+                     <Button
+                        variant="outline-warning"
+                        onClick={() => {
+                           inputFile.current.click();
+                        }}>
+                        Select file ...
+                     </Button>
+                  </div>
                </div>
                <div className={cln('container-wrapper')}>
                   <div className={cln('contents')}>

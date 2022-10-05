@@ -21,7 +21,6 @@ function Logout(props) {
    const pathname = useLocation();
    const navigate = useNavigate();
    const dispatch = useDispatch();
-   console.log(zoomOut);
 
    const handleClose = () => {
       setShow(false);

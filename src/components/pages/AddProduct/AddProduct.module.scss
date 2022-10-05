@@ -1,33 +1,84 @@
 .wrapper {
    height: 100%;
    width: 100%;
-   display: flex;
+}
+.upload_file {
+   height: 70%;
+   max-width: 400px;
+   min-width: 320px;
+   border: 2px dashed rgb(156, 156, 156);
+   border-radius: 8px;
+   margin: 0 auto;
+   &:hover {
+      border: 2px dashed var(--color-light-orange);
+      background-color: rgba(218, 218, 218, 0.347);
+      transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+         border-color 0.15s ease-in-out;
+   }
+   & .container_upload {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+
+      & img {
+         width: 100%;
+         height: 100%;
+         object-fit: cover;
+         overflow: hidden;
+      }
+      & .container_content {
+         position: relative;
+         z-index: 1;
+         height: 100%;
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         justify-content: center;
+         gap: 10px;
+         & svg {
+            font-size: 40px;
+         }
+         & > div:nth-child(2) {
+            font-size: 18px;
+            font-weight: 600;
+         }
+      }
+   }
 }
 .container_form {
    min-width: 35%;
    padding: 20px 0;
+   height: 100%;
    & form {
       height: 100%;
       display: flex;
-      flex-direction: column;
-      & > div {
-         width: 90%;
-         margin-bottom: 20px !important;
+      gap: 20px;
+      & .info_product {
          margin: 0 auto;
-
+         width: 100%;
+         max-width: 500px;
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         gap: 5%;
+         & > div {
+            width: 100%;
+         }
          & label {
             color: var(--color-text-black);
             font-size: 18px;
             font-weight: 500;
          }
          & input {
-            box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 4px;
+            border-radius: 5px;
+            outline: none;
          }
          & div div button {
             width: 100%;
-            background-color: rgba(202, 202, 202, 0.529);
+            background-color: rgb(255, 255, 255);
             color: black;
-            box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 4px;
             border: none;
             &:hover {
                background-color: rgba(255, 0, 51, 0.679) !important;
@@ -36,6 +87,7 @@
       }
       & .row_form {
          justify-content: space-around;
+         margin: 0;
          & > div {
             width: 50%;
          }
@@ -51,28 +103,6 @@
       & button {
          width: 50%;
          margin: 0 auto;
-      }
-   }
-}
-.container_img {
-   min-width: 50%;
-   height: 100%;
-   flex: 1;
-   padding: 40px 0;
-   & .contents_img {
-      width: 80%;
-      height: 80%;
-      padding: 10px 10px;
-      margin: 0 auto;
-
-      & img {
-         width: 100%;
-         height: 100%;
-         object-fit: cover;
-         overflow: hidden;
-         border-radius: 8px;
-         border: 5px solid rgb(93, 96, 239);
-         padding: 10px;
       }
    }
 }

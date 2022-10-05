@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
-import { Button, Form, Modal } from 'react-bootstrap';
+import { Button, Carousel, Form, Modal } from 'react-bootstrap';
 import styles from './ModalBuyProduct.module.scss';
 import img_table from '../../../images/1b.png';
 import img_fix from '../../../images/Construction.png';
@@ -42,7 +42,16 @@ function ModalBuyProduct(props) {
          <Modal.Body>
             <div className={cln('container')}>
                <div className={cln('container-img')}>
-                  <img src={product?.images[0]?.url || img_fix} alt="" />
+                  {/* <img src={product?.images[0]?.url || img_fix} alt="" /> */}
+                  <Carousel>
+                     {product?.images.map((value, index) => {
+                        return (
+                           <Carousel.Item key={index}>
+                              <img src={value?.url || img_fix} alt="" />
+                           </Carousel.Item>
+                        );
+                     })}
+                  </Carousel>
                </div>
                <div className={cln('container-wrapper')}>
                   <div className={cln('contents')}>
