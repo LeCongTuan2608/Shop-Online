@@ -19,10 +19,10 @@ Dashboard.defaultProps = {
 
 function Dashboard(props) {
    const { user } = props;
+
    const [login, setLogin] = useState(user);
    const [zoomOut, setZoomOut] = useState(false);
    const { pathname } = useLocation();
-
    const handleClick = () => {
       setZoomOut(!zoomOut);
       window.localStorage.setItem('zoomOut', zoomOut);
@@ -51,7 +51,16 @@ function Dashboard(props) {
 
             <Container
                className={cln('container')}
-               style={login.token ? undefined : { paddingTop: '100px' }}>
+               style={
+                  login.token
+                     ? login?.infoUser?.role === 'USER'
+                        ? {
+                             paddingTop: '10px',
+                             flex: '1',
+                          }
+                        : undefined
+                     : { paddingTop: '100px' }
+               }>
                <div>
                   {publicRoutes.map((route, index) => {
                      return (

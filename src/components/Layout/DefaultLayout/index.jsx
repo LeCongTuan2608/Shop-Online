@@ -21,7 +21,7 @@ function DefaultLayout(props) {
       infoUser: JSON.parse(window.localStorage.getItem('infoUser')),
    };
 
-   const showHeader = () => ['/search', '/product'].includes(pathname) && <Header />;
+   const showHeader = () => ['/product'].includes(pathname) && <Header />;
 
    return (
       <div className={cln('wrapper')}>

@@ -1,22 +1,22 @@
+import AccountManagement from 'components/pages/AccountManagement';
+import AddCategory from 'components/pages/AddCategory';
+import AddProduct from 'components/pages/AddProduct';
+import BillPage from 'components/pages/BillPage';
 import HomePage from 'components/pages/HomePage';
 import ProductPage from 'components/pages/ProductPage';
 import PurchaseHistory from 'components/pages/PurchaseHistory';
-import SearchPage from 'components/pages/SearchPage';
 import SettingPage from 'components/pages/SettingPage';
-import AddProduct from 'components/pages/AddProduct';
-import UpdateProduct from 'components/pages/UpdateProduct';
-import AccountManagement from 'components/pages/AccountManagement';
-import CategoryIcon from '@mui/icons-material/Category';
+
 // icon
+import CategoryIcon from '@mui/icons-material/Category';
 import FlipCameraAndroidOutlinedIcon from '@mui/icons-material/FlipCameraAndroidOutlined';
 import HistoryOutlinedIcon from '@mui/icons-material/HistoryOutlined';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import PostAddOutlinedIcon from '@mui/icons-material/PostAddOutlined';
 import ProductionQuantityLimitsOutlinedIcon from '@mui/icons-material/ProductionQuantityLimitsOutlined';
-import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import SettingsSuggestOutlinedIcon from '@mui/icons-material/SettingsSuggestOutlined';
-import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
-import AddCategory from 'components/pages/AddCategory';
+import BallotOutlinedIcon from '@mui/icons-material/BallotOutlined';
 // Puclic routes
 const publicRoutes = [
    { path: '/', title: 'Home', component: HomePage, Icon: HomeOutlinedIcon },
@@ -26,12 +26,6 @@ const publicRoutes = [
       title: 'Product',
       component: ProductPage,
       Icon: ProductionQuantityLimitsOutlinedIcon,
-   },
-   {
-      path: '/search',
-      title: 'Search',
-      component: SearchPage,
-      Icon: SearchOutlinedIcon,
    },
 ];
 // Private routes / active ddc chua chua :v
@@ -59,23 +53,23 @@ const adminRoutes = [
       Icon: PostAddOutlinedIcon,
    },
    {
-      path: '/updateproduct',
-      title: 'Update Product',
-      component: UpdateProduct,
-      Icon: FlipCameraAndroidOutlinedIcon,
-   },
-   {
       path: '/addcategory',
       title: 'Add Category',
       component: AddCategory,
-      Icon: FlipCameraAndroidOutlinedIcon,
+      Icon: CategoryIcon,
+   },
+   {
+      path: '/bill',
+      title: 'All Bill',
+      component: BillPage,
+      Icon: BallotOutlinedIcon,
    },
 
    {
       path: '/accountManagement',
       title: 'Account Management',
       component: AccountManagement,
-      Icon: CategoryIcon,
+      Icon: ManageAccountsIcon,
    },
 ];
 

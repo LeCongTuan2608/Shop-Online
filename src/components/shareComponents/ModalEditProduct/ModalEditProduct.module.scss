@@ -107,10 +107,12 @@
    position: relative;
 }
 input {
-   border: none;
    padding: 7px 0;
    transition: 0.4s;
    width: 100%;
+   border: none;
+   border-bottom: 2px solid rgba(168, 0, 64, 0.775);
+   outline: none;
 }
 .input-des {
    border: none;
@@ -127,6 +129,13 @@ input {
    justify-content: center;
    align-items: center;
    z-index: 3;
+}
+
+.message {
+   position: absolute;
+   top: 1%;
+   left: 50%;
+   transform: translateX(-50%);
 }
 @media screen and(max-width: 991px) {
    .modal-backdrop {

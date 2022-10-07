@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import styles from './AddCategory.module.scss';
-import { Button, Form, InputGroup, Spinner, Table } from 'react-bootstrap';
+import { Alert, Button, Form, InputGroup, Spinner, Table } from 'react-bootstrap';
 import Category from 'API/Category';
 import { useState } from 'react';
 import { useRef } from 'react';
@@ -17,7 +17,7 @@ function AddCategory(props) {
    const [token, setToken] = useState();
    const inputField = useRef();
    const [loading, setLoading] = useState(true);
-
+   const [showError, setShowError] = useState(false);
    const fechCategory = async () => {
       try {
          const responese = await Category.getAll();
@@ -61,6 +61,12 @@ function AddCategory(props) {
                <Spinner animation="grow" variant="info" />
             </div>
          )}
+         {showError && (
+            <Alert className={cln('message')} variant="danger">
+               Categories cannot be empty!
+            </Alert>
+         )}
+
          <h1>add category</h1>
          <div className={cln('container')}>
             <div className={cln('table_category')}>
@@ -79,6 +85,7 @@ function AddCategory(props) {
                               value={value}
                               token={token}
                               setLoading={setLoading}
+                              setShowError={setShowError}
                            />
                         );
                      })}

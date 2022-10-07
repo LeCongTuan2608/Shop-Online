@@ -1,9 +1,12 @@
 import axiosClient from './axiosClient';
 
 const Bill = {
-   getAll() {
+   getAll(token) {
       const url = `bills/get_all_bill`;
-      return axiosClient.get(url);
+      const config = {
+         headers: { Authorization: `${token.tokenType} ${token.token}` },
+      };
+      return axiosClient.get(url, config);
    },
    addBill() {
       const url = `bills/add_bill`;
@@ -17,13 +20,19 @@ const Bill = {
       const url = `bills/get_bill/${idBill}`;
       return axiosClient.post(url);
    },
-   getSuccess() {
+   getSuccess(token) {
       const url = `bills/get_bill_success`;
-      return axiosClient.get(url);
+      const config = {
+         headers: { Authorization: `${token.tokenType} ${token.token}` },
+      };
+      return axiosClient.get(url, config);
    },
-   getProcess() {
+   getProcess(token) {
       const url = `bills/get_bill_process`;
-      return axiosClient.get(url);
+      const config = {
+         headers: { Authorization: `${token.tokenType} ${token.token}` },
+      };
+      return axiosClient.get(url, config);
    },
 };
 

@@ -1,0 +1,9 @@
+.field {
+   vertical-align: middle;
+}
+.status {
+   width: 40px;
+   & button {
+      width: 100%;
+   }
+}

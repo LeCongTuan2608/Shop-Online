@@ -74,7 +74,10 @@ function Header(props) {
          </InputGroup>
          {location.pathname === '/product' && (
             <div className={cln('options')}>
-               <DropdownButton id="dropdown-basic-button" title={`Categories: ${title}`}>
+               <DropdownButton
+                  variant="outline-primary"
+                  id="dropdown-basic-button"
+                  title={`Categories: ${title}`}>
                   {categories.length !== 0 ? (
                      categories.map((value, index) => {
                         return (

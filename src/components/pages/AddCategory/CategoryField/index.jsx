@@ -8,28 +8,36 @@ const cln = classNames.bind(styles);
 CategoryField.propTypes = {};
 
 function CategoryField(props) {
-   const { value, token, setLoading } = props;
+   const { value, token, setLoading, setShowError } = props;
    const [active, setActive] = useState(false);
+
    const categoryid = useRef();
    const categoryname = useRef();
 
    const handleUpdate = async () => {
-      const data = new FormData();
-      data.append('name', categoryname.current.value);
-      if (categoryname.current.value === value.categoryName) {
-         setActive(false);
-         return;
-      }
-      try {
-         setLoading(true);
-         const response = await Category.update(data, categoryid.current.innerText, token);
-         console.log('response', response);
-         setActive(false);
-         value.categoryName = categoryname.current.value;
-         setLoading(false);
-      } catch (error) {
-         console.log('error', error);
-         setLoading(false);
+      if (categoryname.current.value) {
+         const data = new FormData();
+         data.append('name', categoryname.current.value);
+         if (categoryname.current.value === value.categoryName) {
+            setActive(false);
+            return;
+         }
+         try {
+            setLoading(true);
+            const response = await Category.update(data, categoryid.current.innerText, token);
+            console.log('response', response);
+            setActive(false);
+            value.categoryName = categoryname.current.value;
+            setLoading(false);
+         } catch (error) {
+            console.log('error', error);
+            setLoading(false);
+         }
+      } else {
+         setShowError(true);
+         setTimeout(() => {
+            setShowError(false);
+         }, 2500);
       }
    };
    return (

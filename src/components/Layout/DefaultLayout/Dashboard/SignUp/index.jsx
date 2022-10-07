@@ -195,18 +195,7 @@ function SignUp(props) {
                                     Có lỗi xảy ra khi đăng kí!
                                  </span>
                               )}
-                              <Button type="submit">Login</Button>
-
-                              <Row className={cln('other')}>
-                                 <Button className={cln('login-other')} variant="outline-primary">
-                                    <FacebookIcon />
-                                    Facebook
-                                 </Button>
-                                 <Button className={cln('login-other')} variant="outline-danger">
-                                    <GoogleIcon />
-                                    Google
-                                 </Button>
-                              </Row>
+                              <Button type="submit">Sign up</Button>
                            </Form>
                         )}
                      </Formik>
