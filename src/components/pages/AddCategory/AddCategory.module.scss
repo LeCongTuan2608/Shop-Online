@@ -1,0 +1,37 @@
+.wrapper {
+   height: 100%;
+}
+
+.add-category {
+   & td {
+      text-align: center;
+      cursor: pointer;
+   }
+}
+.new-field {
+   & td {
+      height: 45px;
+      vertical-align: middle;
+      & input {
+         border-radius: 4px;
+         outline: none;
+      }
+   }
+   .input-field {
+      display: flex;
+      gap: 10px;
+   }
+}
+.loading {
+   position: absolute;
+   top: 0;
+   right: 0;
+   bottom: 0;
+   left: 0;
+   background-color: rgba(145, 145, 145, 0.295);
+   display: flex;
+   flex: 1;
+   justify-content: center;
+   align-items: center;
+   z-index: 3;
+}

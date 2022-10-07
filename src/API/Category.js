@@ -5,13 +5,19 @@ const Category = {
       const url = `categories/get_all_category`;
       return axiosClient.get(url);
    },
-   add(params) {
-      const url = `categories/add_category?name=${params}`;
-      return axiosClient.post(url);
+   add(data, token) {
+      const url = `categories/add_category`;
+      const config = {
+         headers: { Authorization: `${token.tokenType} ${token.token}` },
+      };
+      return axiosClient.post(url, data, config);
    },
-   update(data) {
-      const url = `categories/update_category/${data.id}`;
-      return axiosClient.get(url, { data });
+   update(data, id, token) {
+      const url = `categories/update_category/${id}`;
+      const config = {
+         headers: { Authorization: `${token.tokenType} ${token.token}` },
+      };
+      return axiosClient.put(url, data, config);
    },
    search(params) {
       const url = `categories/search_category?name=${params}`;

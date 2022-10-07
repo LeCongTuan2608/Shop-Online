@@ -31,8 +31,8 @@ function Dashboard(props) {
       <div
          className={cln('wrapper')}
          style={{
-            maxWidth: zoomOut == true ? '67px' : '230px',
-            minWidth: zoomOut == true ? '67px' : '150px',
+            maxWidth: zoomOut == true ? '67px' : '240px',
+            minWidth: zoomOut == true ? '67px' : '190px',
          }}>
          <Navbar className={cln('navbar')} variant="dark">
             {login.token && (
@@ -52,22 +52,8 @@ function Dashboard(props) {
             <Container
                className={cln('container')}
                style={login.token ? undefined : { paddingTop: '100px' }}>
-               {publicRoutes.map((route, index) => {
-                  return (
-                     <Nav.Link
-                        key={index}
-                        className={cln('nav-link')}
-                        id={pathname === `${route.path}` ? cln('active') : undefined}
-                        href={`#${route.path}`}
-                        as={Link}
-                        to={route.path}>
-                        {route.Icon ? <route.Icon /> : undefined}
-                        {zoomOut ? undefined : <span>{route.title}</span>}
-                     </Nav.Link>
-                  );
-               })}
-               {adminRoutes.map((route, index) => {
-                  if (login.token && login.infoUser.role === 'ADMIN') {
+               <div>
+                  {publicRoutes.map((route, index) => {
                      return (
                         <Nav.Link
                            key={index}
@@ -80,12 +66,9 @@ function Dashboard(props) {
                            {zoomOut ? undefined : <span>{route.title}</span>}
                         </Nav.Link>
                      );
-                  }
-                  return false;
-               })}
-               {privateRoutes.map((route, index) => {
-                  if (login.token) {
-                     if (route.role === login.infoUser.role || route.role === undefined) {
+                  })}
+                  {adminRoutes.map((route, index) => {
+                     if (login.token && login.infoUser.role === 'ADMIN') {
                         return (
                            <Nav.Link
                               key={index}
@@ -99,9 +82,28 @@ function Dashboard(props) {
                            </Nav.Link>
                         );
                      }
-                  }
-                  return false;
-               })}
+                     return false;
+                  })}
+                  {privateRoutes.map((route, index) => {
+                     if (login.token) {
+                        if (route.role === login.infoUser.role || route.role === undefined) {
+                           return (
+                              <Nav.Link
+                                 key={index}
+                                 className={cln('nav-link')}
+                                 id={pathname === `${route.path}` ? cln('active') : undefined}
+                                 href={`#${route.path}`}
+                                 as={Link}
+                                 to={route.path}>
+                                 {route.Icon ? <route.Icon /> : undefined}
+                                 {zoomOut ? undefined : <span>{route.title}</span>}
+                              </Nav.Link>
+                           );
+                        }
+                     }
+                     return false;
+                  })}
+               </div>
             </Container>
             {login.token ? (
                <Logout setLogin={setLogin} zoomOut={zoomOut} />

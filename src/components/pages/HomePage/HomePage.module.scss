@@ -5,9 +5,144 @@
 .container {
    width: 100%;
    height: 100%;
-   & img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+   overflow-y: visible;
+   position: relative;
+   & .title {
+      position: absolute;
+      z-index: 1;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: rgb(215, 6, 72);
+      font-family: 'Fredoka One', cursive;
+      font-size: 40px;
+      font-weight: 700;
+      box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+   }
+}
+.contents {
+   position: relative;
+   width: 100%;
+   height: 100%;
+   & .img_chair {
+      width: 200px;
+      height: 200px;
+      position: absolute;
+      bottom: 5%;
+      left: 10%;
+      transform: rotate(-30deg);
+
+      & img {
+         width: 100%;
+         height: 100%;
+         object-fit: cover;
+         border-radius: 30% 70% 75% 52% / 40% 90% 60% 112%;
+         box-shadow: rgba(255, 255, 255, 0.849) 0px 8px 24px;
+         animation: chair_animate 2.5s ease-in-out infinite alternate;
+      }
+   }
+   & .img_diabay {
+      width: 200px;
+      height: 200px;
+      position: absolute;
+      top: 5%;
+      left: 10%;
+      & img {
+         width: 100%;
+         height: 100%;
+         object-fit: cover;
+         border-radius: 100rem;
+         box-shadow: rgba(240, 46, 170, 0.4) 0px 5px, rgba(240, 46, 170, 0.3) 0px 10px,
+            rgba(240, 46, 170, 0.2) 0px 15px, rgba(240, 46, 170, 0.1) 0px 20px,
+            rgba(240, 46, 170, 0.05) 0px 25px;
+
+         animation: fly 5s ease-in-out infinite alternate;
+      }
+   }
+   & .img_robot {
+      width: 200px;
+      height: 200px;
+      position: absolute;
+      animation-name: show;
+      animation-duration: 1s;
+      animation-timing-function: ease-in-out;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 65%;
+      & img {
+         width: 100%;
+         height: 100%;
+         object-fit: cover;
+         border-radius: 60% 42% 70% 33% / 45% 20% 74% 48%;
+         box-shadow: rgba(255, 255, 255, 0.719) 0px 8px 24px;
+         animation: robot_animate 1.5s ease-in-out infinite alternate;
+      }
+      & span {
+         font-size: 20px;
+         font-weight: 600;
+         width: auto;
+         position: absolute;
+         top: 0;
+         right: -25%;
+         font-style: italic;
+         background-color: rgba(255, 255, 255, 0.801);
+         border-radius: 30px;
+         padding: 10px 20px;
+         &::after {
+            content: '';
+            width: 20px;
+            height: 20px;
+            bottom: -25%;
+            left: 5%;
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.801);
+            clip-path: polygon(37% 0, 0% 100%, 100% 23%);
+         }
+      }
+   }
+}
+@keyframes robot_animate {
+   0% {
+      transform: translateY(5%);
+   }
+   25% {
+      transform: translateX(5%);
+   }
+   50% {
+      transform: translateY(0%);
+   }
+   75% {
+      transform: translateX(5%);
+   }
+   100% {
+      transform: translateY(5%);
+   }
+}
+@keyframes chair_animate {
+   0% {
+      transform: rotate(20deg);
+   }
+   100% {
+      transform: rotate(30deg);
+   }
+}
+@keyframes fly {
+   0% {
+      transform: translateX(-150%);
+      opacity: 0.5;
+   }
+   100% {
+      transform: translateX(560%);
+      opacity: 1;
+   }
+}
+@keyframes show {
+   0% {
+      opacity: 0;
+      transform: translateX(100%);
+   }
+   100% {
+      opacity: 1;
+      transform: translateX(0%);
    }
 }

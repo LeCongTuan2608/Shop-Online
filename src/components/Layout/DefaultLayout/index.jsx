@@ -28,8 +28,19 @@ function DefaultLayout(props) {
          <Dashboard user={user} />
          <div className={cln('container')}>
             {showHeader()}
-            <div className={cln('content-wrapper')}>
-               <div className={cln('content')}>
+            <div
+               className={cln('content-wrapper')}
+               style={{
+                  background:
+                     pathname === '/'
+                        ? 'linear-gradient(to right, rgb(43, 192, 228), rgb(234, 236, 198))'
+                        : undefined,
+               }}>
+               <div
+                  className={cln('content')}
+                  style={{
+                     overflowY: pathname === '/' ? 'hidden' : undefined,
+                  }}>
                   <Outlet />
                </div>
             </div>

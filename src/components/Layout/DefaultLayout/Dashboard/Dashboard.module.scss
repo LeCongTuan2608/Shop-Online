@@ -1,7 +1,7 @@
 .wrapper {
    flex: 1;
-   min-width: 150px;
-   max-width: 230px;
+   min-width: 190px;
+   max-width: 240px;
    position: relative;
    transition: ease-in-out 0.5s;
 }
@@ -10,7 +10,8 @@
    background-color: rgb(20, 24, 55);
    height: 100%;
    flex-direction: column;
-
+   justify-content: space-between !important;
+   gap: 40px;
    & .user {
       width: 100%;
       padding: 5px 12px;
@@ -18,7 +19,6 @@
       justify-content: space-between;
       color: var(--color-text-white);
       gap: 10px;
-      margin-bottom: 40px;
 
       & .user-card {
          & .card-img {
@@ -46,11 +46,21 @@
       }
    }
    & .container {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      justify-content: flex-start !important;
-      gap: 15px;
+      & > div {
+         display: flex;
+         flex-direction: column;
+         height: 100%;
+         justify-content: flex-start !important;
+         gap: 15px;
+         overflow: hidden;
+         overflow-y: auto;
+         width: 100%;
+         &::-webkit-scrollbar {
+            display: none;
+         }
+      }
+      overflow: hidden;
+      visibility: visible;
    }
    & .logout {
       width: 100%;
@@ -65,7 +75,6 @@
       color: var();
       align-items: center;
       border-radius: 6px;
-
       & svg {
          margin-right: 15px;
       }
@@ -88,7 +97,7 @@
 }
 .show-hide {
    position: absolute;
-   top: 11%;
+   top: 12%;
    right: -5%;
    z-index: 5;
    border-radius: 100rem;

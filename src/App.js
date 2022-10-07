@@ -3,7 +3,6 @@ import { Fragment } from 'react';
 import { Outlet, Route, Routes } from 'react-router-dom';
 import { adminRoutes, privateRoutes, publicRoutes } from './routes';
 import History from './History';
-// tao func check pathname thanwg nao se co header cho ra :y la ben kia
 
 function App() {
    return (

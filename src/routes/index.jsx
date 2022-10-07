@@ -6,7 +6,7 @@ import SettingPage from 'components/pages/SettingPage';
 import AddProduct from 'components/pages/AddProduct';
 import UpdateProduct from 'components/pages/UpdateProduct';
 import AccountManagement from 'components/pages/AccountManagement';
-
+import CategoryIcon from '@mui/icons-material/Category';
 // icon
 import FlipCameraAndroidOutlinedIcon from '@mui/icons-material/FlipCameraAndroidOutlined';
 import HistoryOutlinedIcon from '@mui/icons-material/HistoryOutlined';
@@ -16,6 +16,7 @@ import ProductionQuantityLimitsOutlinedIcon from '@mui/icons-material/Production
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import SettingsSuggestOutlinedIcon from '@mui/icons-material/SettingsSuggestOutlined';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import AddCategory from 'components/pages/AddCategory';
 // Puclic routes
 const publicRoutes = [
    { path: '/', title: 'Home', component: HomePage, Icon: HomeOutlinedIcon },
@@ -64,10 +65,17 @@ const adminRoutes = [
       Icon: FlipCameraAndroidOutlinedIcon,
    },
    {
+      path: '/addcategory',
+      title: 'Add Category',
+      component: AddCategory,
+      Icon: FlipCameraAndroidOutlinedIcon,
+   },
+
+   {
       path: '/accountManagement',
       title: 'Account Management',
       component: AccountManagement,
-      Icon: ManageAccountsIcon,
+      Icon: CategoryIcon,
    },
 ];
 
