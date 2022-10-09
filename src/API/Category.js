@@ -20,8 +20,8 @@ const Category = {
       return axiosClient.put(url, data, config);
    },
    search(params) {
-      const url = `categories/search_category?name=${params}`;
-      return axiosClient.get(url);
+      const url = `categories/search_category`;
+      return axiosClient.get(url, { params });
    },
 };
 

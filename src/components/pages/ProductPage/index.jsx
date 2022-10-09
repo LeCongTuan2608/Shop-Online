@@ -3,12 +3,10 @@ import classNames from 'classnames/bind';
 import Product from 'components/shareComponents/Product';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
-import Skeleton from 'react-loading-skeleton';
-import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
-import styles from './ProductPage.module.scss';
-import img_error from '../../../images/removebg.png';
 import { Spinner } from 'react-bootstrap';
+import { useSearchParams } from 'react-router-dom';
+import img_error from '../../../images/removebg.png';
+import styles from './ProductPage.module.scss';
 const cln = classNames.bind(styles);
 ProductPage.propTypes = {
    categories: PropTypes.string,
@@ -19,28 +17,20 @@ ProductPage.DefautlProps = {
 
 function ProductPage(props) {
    const [data, setData] = useState([]);
-   const location = useLocation();
-   const getCategoryRedux = useSelector((state) => state.category);
-   const getRedux = useSelector((state) => state);
-   const [loading, setLoading] = useState(false);
+   const [searchParams] = useSearchParams();
+   const [loading, setLoading] = useState(true);
+   const [deleted, setDeleted] = useState(false);
    useEffect(() => {
-      const id = window.localStorage.getItem('categoryid');
-      setLoading(true);
+      const id = searchParams.get('id');
+      const q = searchParams.get('q');
       const fetchProduct = async () => {
          try {
-            let response;
-            if (id == 0) {
-               response = await Product_API.getAll();
-               setData(response.data.result);
-               setLoading(false);
-               console.log('response', response);
-            } else {
-               response = await Product_API.getByCategory(
-                  getCategoryRedux?.current?.categoryId || id,
-               );
-               setData(response.data.result);
-               setLoading(false);
-            }
+            let response = await Product_API.search({
+               category_id: id,
+               product_name: q,
+            });
+            setData(response.data.result);
+            setLoading(false);
          } catch (error) {
             console.log('error', error);
             setData(undefined);
@@ -48,8 +38,7 @@ function ProductPage(props) {
          }
       };
       fetchProduct();
-   }, [getCategoryRedux?.current]);
-
+   }, [searchParams, deleted]);
    return (
       <div className={cln('wrapper')}>
          {loading && (
@@ -57,10 +46,12 @@ function ProductPage(props) {
                <Spinner animation="grow" variant="info" />
             </div>
          )}
-         {data ? (
+         {data.length > 0 ? (
             <div className={cln('product')}>
                {data.map((value, index) => {
-                  return <Product key={index} value={value} />;
+                  return (
+                     <Product deleted={deleted} setDeleted={setDeleted} key={index} value={value} />
+                  );
                })}
             </div>
          ) : (

@@ -8,39 +8,45 @@ import ModalBuyProduct from '../ModalBuyProduct';
 import styles from './Product.module.scss';
 import img_fix from '../../../images/Construction.png';
 import ModalEditProduct from '../ModalEditProduct';
+import { useRef } from 'react';
 
 const cln = classNames.bind(styles);
 
 Product.propTypes = {
    value: PropTypes.object,
+   setDeleted: PropTypes.func,
+   deleted: PropTypes.bool,
 };
 Product.defaultProps = {
    value: undefined,
+   setDeleted: null,
+   deleted: false,
 };
 const formatCash = (str) => {
    return str.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 };
 function Product(props) {
-   const { value } = props;
+   const { value, deleted, setDeleted } = props;
    const [show, setShow] = useState(false);
    const token = window.localStorage.getItem('token');
    const userRole = JSON.parse(localStorage.getItem('infoUser'));
+   const cardProduct = useRef();
 
    const handleShow = () => {
       setShow(!show);
    };
    return (
-      <div className={cln('warpper')}>
+      <div className={cln('warpper')} ref={cardProduct}>
          <div className={cln('container')}>
             <div className={cln('card-img')}>
                <img src={value?.images[0]?.url || img_fix} alt="" />
             </div>
             <div className={cln('card-describe')}>
                <div className={cln('card-title')}>
-                  <p className={cln('title')}> {value.productName}</p>
+                  <p className={cln('title')}> {value?.productName}</p>
                </div>
                <div className={cln('card-priced')}>
-                  <span className={cln('priced')}> vnđ: {formatCash(value.productPrice)}</span>
+                  <span className={cln('priced')}> vnđ: {formatCash(value?.productPrice)}</span>
                </div>
                <div className={cln('card-buy')}>
                   {userRole?.role === 'ADMIN' ? (
@@ -56,7 +62,13 @@ function Product(props) {
                   )}
                   {token ? (
                      userRole.role === 'ADMIN' ? (
-                        <ModalEditProduct product={value} show={show} handleHide={handleShow} />
+                        <ModalEditProduct
+                           product={value}
+                           show={show}
+                           deleted={deleted}
+                           setDeleted={setDeleted}
+                           handleHide={handleShow}
+                        />
                      ) : (
                         <ModalBuyProduct product={value} show={show} handleHide={handleShow} />
                      )

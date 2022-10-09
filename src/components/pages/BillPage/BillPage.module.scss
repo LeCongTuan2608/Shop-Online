@@ -1,7 +1,6 @@
 .wrapper {
    height: 100%;
    color: var(--color-text-black);
-   position: relative;
 }
 .header {
    padding: 10px 0;
@@ -9,4 +8,24 @@
       font-weight: 500;
       font-size: 20px;
    }
+}
+.loading {
+   position: absolute;
+   top: 0;
+   right: 0;
+   bottom: 0;
+   left: 0;
+   background-color: rgba(145, 145, 145, 0.295);
+   display: flex;
+   flex: 1;
+   justify-content: center;
+   align-items: center;
+   z-index: 1;
+}
+.message {
+   position: absolute !important;
+   right: 3%;
+   top: 5%;
+   z-index: 4;
+   animation: show 0.5s ease-in-out forwards;
 }

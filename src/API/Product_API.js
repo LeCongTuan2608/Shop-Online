@@ -31,8 +31,8 @@ const Product_API = {
       return axiosClient.get(url);
    },
    search(params) {
-      const url = `products/search_product?product_name=${params}`;
-      return axiosClient.get(url);
+      const url = `products/search_product`;
+      return axiosClient.get(url, { params });
    },
    getByCategory(idCategory) {
       const url = `products/get_product_by_category/${idCategory}`;

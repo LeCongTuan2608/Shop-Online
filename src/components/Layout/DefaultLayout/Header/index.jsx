@@ -1,12 +1,13 @@
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import Category from 'API/Category';
-import { categoryProduct } from 'Auth/CategorySlide';
+import Product_API from 'API/Product_API';
+import { categoryProduct } from 'Slide/CategorySlide';
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Button, Dropdown, DropdownButton, Form, InputGroup } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import History from '../../../../History';
 import styles from './Header.module.scss';
 const cln = classNames.bind(styles);
@@ -19,21 +20,20 @@ Header.DefautlProps = {
 
 function Header(props) {
    const location = useLocation();
+   const [searchParams, setSearchParams] = useSearchParams();
    const dispatch = useDispatch();
-   const [title, setTitle] = useState(window.localStorage.getItem('categoryname'));
+   const [title, setTitle] = useState();
    const [categories, setCategories] = useState([]);
-
-   const getCategoryRedux = useSelector((state) => state.category);
-
+   const timing = useRef(null);
+   const [keyword, setKeyWord] = useState('');
    useEffect(() => {
-      const params = new URLSearchParams(location.search);
-      const q = params.get('q');
-      if (q) {
-         setTitle(window.localStorage.getItem('categoryname'));
+      const search = searchParams.get('search');
+      const id = searchParams.get('id');
+      const name = searchParams.get('name');
+      if (id || name || search) {
+         setTitle(name);
       } else {
          setTitle('Tất cả');
-         window.localStorage.setItem('categoryid', 0);
-         window.localStorage.setItem('categoryname', 'Tất cả');
       }
       const fechCategory = async () => {
          try {
@@ -44,20 +44,36 @@ function Header(props) {
          }
       };
       fechCategory();
+      setKeyWord(searchParams.get('q') ? searchParams.get('q') : '');
    }, []);
    const handleSetCategory = async (e) => {
       const categoryId = e.target.attributes.categoryid.value;
       const categoryName = e.target.attributes.categoryname.value;
-      const valueObj = {
-         categoryId: categoryId,
-         categoryName: categoryName,
-      };
-
-      setTitle(categoryName);
-      History.push(`?q=${categoryName}`);
-      window.localStorage.setItem('categoryid', categoryId);
-      window.localStorage.setItem('categoryname', categoryName);
-      await dispatch(categoryProduct(valueObj)).unwrap();
+      if (categoryId === 0 || categoryName === 'Tất cả') {
+         searchParams.delete('id');
+         searchParams.delete('name');
+         setTitle('Tất cả');
+         setSearchParams(searchParams);
+      } else {
+         setTitle(categoryName);
+         searchParams.set('id', categoryId);
+         searchParams.set('name', categoryName);
+         setSearchParams(searchParams);
+      }
+   };
+   const handleSearch = (e) => {
+      setKeyWord(e.target.value);
+      if (timing.current) {
+         clearTimeout(timing.current);
+      }
+      timing.current = setTimeout(() => {
+         if (e.target.value === '') {
+            searchParams.delete('q');
+         } else {
+            searchParams.set('q', e.target.value);
+         }
+         setSearchParams(searchParams);
+      }, 500);
    };
    return (
       <div className={cln('wrapper')}>
@@ -65,8 +81,8 @@ function Header(props) {
             <Form.Control
                type="search"
                placeholder="Search"
-               aria-label="search"
-               aria-describedby="basic-addon2"
+               value={keyword}
+               onChange={handleSearch}
             />
             <Button className={cln('button')} variant="outline-secondary" id="button-addon2">
                <SearchOutlinedIcon />

@@ -1,6 +1,6 @@
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import Product_API from 'API/Product_API';
-import { categoryProduct } from 'Auth/CategorySlide';
+import { categoryProduct } from 'Slide/CategorySlide';
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
@@ -29,15 +29,14 @@ function Logout(props) {
       setShow(true);
    };
    const handleLogout = async () => {
-      ['/', '/search', '/product'].includes(pathname);
-      window.localStorage.setItem('categoryid', 0);
-      window.localStorage.setItem('categoryname', 'Tất cả');
-      const valueObj = {
-         categoryId: 0,
-         categoryName: 'Tất cả',
-      };
-      await dispatch(categoryProduct(valueObj)).unwrap();
-
+      // ['/', '/search', '/product'].includes(pathname);
+      // window.localStorage.setItem('categoryid', 0);
+      // window.localStorage.setItem('categoryname', 'Tất cả');
+      // const valueObj = {
+      //    categoryId: 0,
+      //    categoryName: 'Tất cả',
+      // };
+      // await dispatch(categoryProduct(valueObj)).unwrap();
       setShow(false);
       setLogin({
          token: window.localStorage.removeItem('token'),

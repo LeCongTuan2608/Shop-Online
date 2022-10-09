@@ -12,12 +12,15 @@ const Bill = {
       const url = `bills/add_bill`;
       return axiosClient.post(url);
    },
-   updateStatus(idBill) {
-      const url = `bills/update_bill_status/${idBill}`;
-      return axiosClient.post(url);
+   updateStatus(id, token) {
+      const url = `bills/update_bill_status/${id}`;
+      const config = {
+         headers: { Authorization: `${token.tokenType} ${token.token}` },
+      };
+      return axiosClient.put(url, {}, config);
    },
-   getById(idBill) {
-      const url = `bills/get_bill/${idBill}`;
+   getById(id) {
+      const url = `bills/get_bill/${id}`;
       return axiosClient.post(url);
    },
    getSuccess(token) {

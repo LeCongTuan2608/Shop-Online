@@ -1,7 +1,7 @@
 import FacebookIcon from '@mui/icons-material/Facebook';
 import GoogleIcon from '@mui/icons-material/Google';
 import LoginIcon from '@mui/icons-material/Login';
-import { userLogin } from 'Auth/UserSlide';
+import { userLogin } from 'Slide/UserSlide';
 import classNames from 'classnames/bind';
 import { Formik } from 'formik';
 import { useState } from 'react';
@@ -29,6 +29,8 @@ function Login(props) {
    const [modalShow, setModalShow] = useState(false);
    const [loading, setLoading] = useState(false);
    const [errorss, setErrorss] = useState(false);
+   const userr = useSelector((props) => props.user);
+   console.log('userr', userr);
 
    const handleShow = () => {
       setModalShow(true);

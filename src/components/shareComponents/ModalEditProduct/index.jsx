@@ -1,5 +1,5 @@
 import Product_API from 'API/Product_API';
-import { categoryProduct } from 'Auth/CategorySlide';
+import { categoryProduct } from 'Slide/CategorySlide';
 import classNames from 'classnames/bind';
 import { useEffect, useRef, useState } from 'react';
 import { Alert, Button, Carousel, Form, Modal, Spinner } from 'react-bootstrap';
@@ -26,7 +26,7 @@ ModalEditProduct.DefautlProps = {
 };
 
 function ModalEditProduct(props) {
-   const { show, handleHide, product } = props;
+   const { show, handleHide, product, deleted, setDeleted } = props;
    const dispatch = useDispatch();
    const [token, setToken] = useState();
    const [detailProduct, setDetailProduct] = useState(product);
@@ -46,20 +46,7 @@ function ModalEditProduct(props) {
          return URL.revokeObjectURL(value.preview);
       });
    };
-   // ================load lại product==============
-   const handleReLoad = async () => {
-      const categoryid = window.localStorage.getItem('categoryid');
-      const categoryname = window.localStorage.getItem('categoryname');
-      const valueObj = {
-         categoryId: categoryid,
-         categoryName: categoryname,
-      };
-      if (categoryid == 0) {
-         await dispatch(categoryProduct(valueObj)).unwrap();
-      } else {
-         await dispatch(categoryProduct(valueObj)).unwrap();
-      }
-   };
+
    //=================================================================
    useEffect(() => {
       // bug
@@ -118,9 +105,9 @@ function ModalEditProduct(props) {
       try {
          setLoading(true);
          await Product_API.delete(product.productId, token);
-         handleReLoad();
          revokeImage();
          handleHide(false);
+         setDeleted(!deleted);
          setLoading(false);
       } catch (error) {
          console.log('error', error);
@@ -148,9 +135,9 @@ function ModalEditProduct(props) {
       try {
          setLoading(true);
          await Product_API.update(data, detailProduct.productId, token);
-         handleReLoad();
          handleHide(false);
          revokeImage();
+         setDeleted(!deleted);
          setLoading(false);
       } catch (error) {
          console.log('error', error);

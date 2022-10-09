@@ -2,7 +2,21 @@
    height: 100%;
    position: relative;
 }
-
+.input-search {
+   width: 50% !important;
+   margin-top: 1rem !important;
+   margin: 0 auto;
+   border-radius: 10px;
+   & input {
+      border-radius: 10px;
+      box-shadow: rgba(240, 46, 170, 0.4) 5px 5px, rgba(240, 46, 170, 0.3) 10px 10px,
+         rgba(240, 46, 170, 0.2) 15px 15px, rgba(240, 46, 170, 0.1) 20px 20px,
+         rgba(240, 46, 170, 0.05) 25px 25px;
+      &:focus {
+         box-shadow: none;
+      }
+   }
+}
 .add-category {
    & td {
       text-align: center;
@@ -39,7 +53,7 @@
 .message {
    position: absolute !important;
    right: 0;
-   bottom: 0;
+   top: 5%;
    animation: show 0.5s ease-in-out forwards;
 }
 @keyframes show {

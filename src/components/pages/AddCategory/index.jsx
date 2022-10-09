@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { useRef } from 'react';
 import CategoryField from './CategoryField';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
+import { useSearchParams } from 'react-router-dom';
 const cln = classNames.bind(styles);
 AddCategory.propTypes = {};
 
@@ -15,13 +16,17 @@ function AddCategory(props) {
    const [category, setCategory] = useState([]);
    const [field, setField] = useState(false);
    const [token, setToken] = useState();
-   const inputField = useRef();
    const [loading, setLoading] = useState(true);
    const [showError, setShowError] = useState(false);
+   const [showSucc, setShowSucc] = useState(false);
+   const [inputSearch, setInputSearch] = useState('');
+   const inputField = useRef();
+   const refInputSeach = useRef(null);
+   const [searchParams, setSearchParams] = useSearchParams();
    const fechCategory = async () => {
       try {
-         const responese = await Category.getAll();
-         setCategory(responese.data.result);
+         const response = await Category.getAll();
+         setCategory(response.data.result);
       } catch (error) {
          console.log('error', error);
       }
@@ -31,7 +36,6 @@ function AddCategory(props) {
          tokenType: window.localStorage.getItem('tokenType'),
          token: window.localStorage.getItem('token'),
       });
-      setLoading(true);
       fechCategory();
       setLoading(false);
    }, []);
@@ -50,8 +54,26 @@ function AddCategory(props) {
          setLoading(false);
       }
    };
-   const handleBlur = () => {
-      console.log(inputField.current.value);
+   const handleSearch = (e) => {
+      setInputSearch(e.target.value);
+      if (refInputSeach.current) {
+         clearTimeout(refInputSeach.current);
+      }
+
+      refInputSeach.current = setTimeout(async () => {
+         searchParams.set('q', e.target.value);
+         setSearchParams(searchParams);
+         if (e.target.value === '') {
+            searchParams.delete('q');
+            setSearchParams(searchParams);
+         }
+         try {
+            const response = await Category.search({ name: e.target.value });
+            setCategory(response.data.result);
+         } catch (error) {
+            console.log('error', error);
+         }
+      }, 500);
    };
 
    return (
@@ -66,8 +88,14 @@ function AddCategory(props) {
                Categories cannot be empty!
             </Alert>
          )}
-
-         <h1>add category</h1>
+         {showSucc && (
+            <Alert className={cln('message')} variant="success">
+               Update successful
+            </Alert>
+         )}
+         <InputGroup className={`mb-3 ${cln('input-search')}`}>
+            <Form.Control value={inputSearch} onChange={handleSearch} />
+         </InputGroup>
          <div className={cln('container')}>
             <div className={cln('table_category')}>
                <Table striped bordered hover size="sm">
@@ -78,22 +106,29 @@ function AddCategory(props) {
                      </tr>
                   </thead>
                   <tbody>
-                     {category?.map((value, index) => {
-                        return (
-                           <CategoryField
-                              key={index}
-                              value={value}
-                              token={token}
-                              setLoading={setLoading}
-                              setShowError={setShowError}
-                           />
-                        );
-                     })}
+                     {category.length > 0 ? (
+                        category?.map((value, index) => {
+                           return (
+                              <CategoryField
+                                 key={index}
+                                 value={value}
+                                 token={token}
+                                 setLoading={setLoading}
+                                 setShowError={setShowError}
+                                 setShowSucc={setShowSucc}
+                              />
+                           );
+                        })
+                     ) : (
+                        <tr style={{ textAlign: 'center' }}>
+                           <td colSpan={2}>Not found !!</td>
+                        </tr>
+                     )}
                      {field && (
                         <tr className={cln('new-field')}>
                            <td>{category.length + 1}</td>
                            <td className={cln('input-field')}>
-                              <input ref={inputField} type="text" onBlur={handleBlur} />
+                              <input ref={inputField} type="text" />
                               <Button variant="primary" onClick={handleAdd}>
                                  Add
                               </Button>

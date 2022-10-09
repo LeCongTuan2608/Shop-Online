@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import User from 'API/User';
 
-export const categoryProduct = createAsyncThunk('user/login', async (data) => {
+export const categoryProduct = createAsyncThunk('category', async (data) => {
    return data;
 });
 const CategorySlice = createSlice({

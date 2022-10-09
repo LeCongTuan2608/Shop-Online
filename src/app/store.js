@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
-import userReducer from '../Auth/UserSlide';
-import categoryReducer from '../Auth/CategorySlide';
+import userReducer from '../Slide/UserSlide';
+import categoryReducer from '../Slide/CategorySlide';
 
 const rootReducer = {
    user: userReducer,

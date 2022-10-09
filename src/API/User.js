@@ -13,15 +13,19 @@ const User = {
       const url = `users/update_user/${data.email}`;
       return axiosClient.put(url, data);
    },
-   getByJWT(data) {
+   getByJWT(token) {
       const url = 'users/get_user';
-      return axiosClient.get(url, {
-         headers: { Authorization: `${data.tokenType} ${data.token}` },
-      });
+      const config = {
+         headers: { Authorization: `${token.tokenType} ${token.token}` },
+      };
+      return axiosClient.get(url, config);
    },
-   getAll() {
+   getAll(token) {
       const url = 'users/get_all_user';
-      return axiosClient.get(url);
+      const config = {
+         headers: { Authorization: `${token.tokenType} ${token.token}` },
+      };
+      return axiosClient.get(url, config);
    },
 };
 

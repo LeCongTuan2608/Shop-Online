@@ -17,6 +17,8 @@ import PostAddOutlinedIcon from '@mui/icons-material/PostAddOutlined';
 import ProductionQuantityLimitsOutlinedIcon from '@mui/icons-material/ProductionQuantityLimitsOutlined';
 import SettingsSuggestOutlinedIcon from '@mui/icons-material/SettingsSuggestOutlined';
 import BallotOutlinedIcon from '@mui/icons-material/BallotOutlined';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import RedeemOutlinedIcon from '@mui/icons-material/RedeemOutlined';
 // Puclic routes
 const publicRoutes = [
    { path: '/', title: 'Home', component: HomePage, Icon: HomeOutlinedIcon },
@@ -25,7 +27,7 @@ const publicRoutes = [
       path: '/product',
       title: 'Product',
       component: ProductPage,
-      Icon: ProductionQuantityLimitsOutlinedIcon,
+      Icon: ShoppingCartOutlinedIcon,
    },
 ];
 // Private routes / active ddc chua chua :v
@@ -34,7 +36,7 @@ const privateRoutes = [
       path: '/purchaseHistory',
       title: 'Purchase History',
       component: PurchaseHistory,
-      Icon: HistoryOutlinedIcon,
+      Icon: RedeemOutlinedIcon,
       role: 'USER',
    },
    {
@@ -60,7 +62,7 @@ const adminRoutes = [
    },
    {
       path: '/bill',
-      title: 'All Bill',
+      title: 'Bill',
       component: BillPage,
       Icon: BallotOutlinedIcon,
    },

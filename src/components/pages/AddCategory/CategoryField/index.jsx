@@ -8,7 +8,7 @@ const cln = classNames.bind(styles);
 CategoryField.propTypes = {};
 
 function CategoryField(props) {
-   const { value, token, setLoading, setShowError } = props;
+   const { value, token, setLoading, setShowError, setShowSucc } = props;
    const [active, setActive] = useState(false);
 
    const categoryid = useRef();
@@ -29,6 +29,10 @@ function CategoryField(props) {
             setActive(false);
             value.categoryName = categoryname.current.value;
             setLoading(false);
+            setShowSucc(true);
+            setTimeout(() => {
+               setShowSucc(false);
+            }, 2500);
          } catch (error) {
             console.log('error', error);
             setLoading(false);
