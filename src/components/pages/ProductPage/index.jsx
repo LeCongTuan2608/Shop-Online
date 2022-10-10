@@ -48,7 +48,7 @@ function ProductPage(props) {
             </div>
          )}
 
-         {data.length > 0 ? (
+         {data?.length > 0 ? (
             <div className={cln('product')}>
                {data.map((value, index) => {
                   return (

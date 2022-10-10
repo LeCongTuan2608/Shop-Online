@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+// http://118.69.69.160:8080/APISERVER
 const axiosClient = axios.create({
    baseURL: 'http://118.69.69.160:8080/APISERVER/api/',
    headers: {
