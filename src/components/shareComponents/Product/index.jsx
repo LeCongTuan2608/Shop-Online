@@ -1,14 +1,13 @@
-import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
-import ModalBuyProduct from '../ModalBuyProduct';
-import styles from './Product.module.scss';
 import img_fix from '../../../images/Construction.png';
+import ModalBuyProduct from '../ModalBuyProduct';
 import ModalEditProduct from '../ModalEditProduct';
-import { useRef } from 'react';
+import styles from './Product.module.scss';
 
 const cln = classNames.bind(styles);
 
@@ -27,11 +26,11 @@ const formatCash = (str) => {
 };
 function Product(props) {
    const { value, deleted, setDeleted } = props;
+
    const [show, setShow] = useState(false);
    const token = window.localStorage.getItem('token');
    const userRole = JSON.parse(localStorage.getItem('infoUser'));
    const cardProduct = useRef();
-
    const handleShow = () => {
       setShow(!show);
    };

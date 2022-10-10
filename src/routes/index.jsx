@@ -4,21 +4,18 @@ import AddProduct from 'components/pages/AddProduct';
 import BillPage from 'components/pages/BillPage';
 import HomePage from 'components/pages/HomePage';
 import ProductPage from 'components/pages/ProductPage';
-import PurchaseHistory from 'components/pages/PurchaseHistory';
+import ShoppingCart from 'components/pages/ShoppingCart';
 import SettingPage from 'components/pages/SettingPage';
 
 // icon
+import BallotOutlinedIcon from '@mui/icons-material/BallotOutlined';
 import CategoryIcon from '@mui/icons-material/Category';
-import FlipCameraAndroidOutlinedIcon from '@mui/icons-material/FlipCameraAndroidOutlined';
-import HistoryOutlinedIcon from '@mui/icons-material/HistoryOutlined';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import PostAddOutlinedIcon from '@mui/icons-material/PostAddOutlined';
-import ProductionQuantityLimitsOutlinedIcon from '@mui/icons-material/ProductionQuantityLimitsOutlined';
-import SettingsSuggestOutlinedIcon from '@mui/icons-material/SettingsSuggestOutlined';
-import BallotOutlinedIcon from '@mui/icons-material/BallotOutlined';
-import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import RedeemOutlinedIcon from '@mui/icons-material/RedeemOutlined';
+import SettingsSuggestOutlinedIcon from '@mui/icons-material/SettingsSuggestOutlined';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 // Puclic routes
 const publicRoutes = [
    { path: '/', title: 'Home', component: HomePage, Icon: HomeOutlinedIcon },
@@ -27,16 +24,16 @@ const publicRoutes = [
       path: '/product',
       title: 'Product',
       component: ProductPage,
-      Icon: ShoppingCartOutlinedIcon,
+      Icon: RedeemOutlinedIcon,
    },
 ];
-// Private routes / active ddc chua chua :v
+// Private routes
 const privateRoutes = [
    {
-      path: '/purchaseHistory',
-      title: 'Purchase History',
-      component: PurchaseHistory,
-      Icon: RedeemOutlinedIcon,
+      path: '/shoppingcart',
+      title: 'Shopping Cart',
+      component: ShoppingCart,
+      Icon: ShoppingCartOutlinedIcon,
       role: 'USER',
    },
    {
@@ -46,7 +43,7 @@ const privateRoutes = [
       Icon: SettingsSuggestOutlinedIcon,
    },
 ];
-//
+// admin routes
 const adminRoutes = [
    {
       path: '/addproduct',

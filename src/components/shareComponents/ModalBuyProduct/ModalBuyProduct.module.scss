@@ -86,7 +86,13 @@
 .modal-backdrop {
    width: 100% !important;
 }
-
+.message {
+   position: absolute !important;
+   right: 2%;
+   top: 3%;
+   animation: show 0.5s ease-in-out forwards;
+   z-index: 5;
+}
 @media screen and(max-width: 991px) {
    .modal-backdrop {
       width: 100% !important;

@@ -1,6 +1,4 @@
 .wrapper {
-   width: 100%;
-   height: 100%;
    padding: 10px 10px;
    border: 2px solid white;
    border-radius: 7px;
@@ -10,10 +8,19 @@
 .container {
    display: flex;
    gap: 20px;
-   padding: 10px 0;
    align-items: center;
    overflow: hidden;
    text-overflow: clip;
+   width: auto;
+   &-input {
+      & span {
+         & input {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+         }
+      }
+   }
    &-img {
       max-width: 100px;
       max-height: 100px;
@@ -24,7 +31,6 @@
       }
    }
    & .container-content {
-      flex: 1;
       color: var(--color-text-black);
       display: flex;
       gap: 10px;
@@ -32,24 +38,38 @@
       justify-content: center;
       font-size: 16px;
       overflow: hidden;
+      width: auto;
+      flex: 1;
+
       & p {
          margin: 0;
       }
       & .content-title {
          font-size: 18px;
+         font-weight: 600;
+         height: 50px;
+         color: var(--color-text-black);
+         overflow: hidden;
+         line-height: 1.5rem;
+         display: flex;
+         align-items: center;
       }
       & .content-des {
          height: 50px;
          color: var(--color-light-black);
          font-style: italic;
+         overflow: hidden;
       }
    }
-   & .content-status {
+   & .container-price {
       display: flex;
       flex-direction: column;
       color: var(--color-text-black);
       justify-content: center;
       align-items: flex-end;
-      gap: 20px;
+      & span {
+         font-weight: 500;
+         font-style: italic;
+      }
    }
 }

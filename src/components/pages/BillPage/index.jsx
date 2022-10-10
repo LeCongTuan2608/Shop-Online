@@ -34,7 +34,6 @@ function BillPage(props) {
                response = await Bill.getSuccess(token);
             } else {
                response = await Bill.getAll(token);
-               console.log('response', response);
             }
             setBills(response.data);
          } catch (error) {

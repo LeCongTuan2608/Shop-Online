@@ -29,20 +29,13 @@ function Logout(props) {
       setShow(true);
    };
    const handleLogout = async () => {
-      // ['/', '/search', '/product'].includes(pathname);
-      // window.localStorage.setItem('categoryid', 0);
-      // window.localStorage.setItem('categoryname', 'Tất cả');
-      // const valueObj = {
-      //    categoryId: 0,
-      //    categoryName: 'Tất cả',
-      // };
-      // await dispatch(categoryProduct(valueObj)).unwrap();
       setShow(false);
       setLogin({
          token: window.localStorage.removeItem('token'),
          infoUser: window.localStorage.removeItem('infoUser'),
       });
       window.localStorage.removeItem('tokenType');
+      window.localStorage.removeItem('cartProduct');
       navigate('/');
    };
 

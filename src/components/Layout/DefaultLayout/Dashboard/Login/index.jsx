@@ -30,7 +30,6 @@ function Login(props) {
    const [loading, setLoading] = useState(false);
    const [errorss, setErrorss] = useState(false);
    const userr = useSelector((props) => props.user);
-   console.log('userr', userr);
 
    const handleShow = () => {
       setModalShow(true);

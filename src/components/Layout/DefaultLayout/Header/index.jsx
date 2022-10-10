@@ -1,14 +1,10 @@
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import Category from 'API/Category';
-import Product_API from 'API/Product_API';
-import { categoryProduct } from 'Slide/CategorySlide';
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
 import { useEffect, useRef, useState } from 'react';
 import { Button, Dropdown, DropdownButton, Form, InputGroup } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useSearchParams } from 'react-router-dom';
-import History from '../../../../History';
 import styles from './Header.module.scss';
 const cln = classNames.bind(styles);
 Header.propTypes = {
@@ -21,16 +17,15 @@ Header.DefautlProps = {
 function Header(props) {
    const location = useLocation();
    const [searchParams, setSearchParams] = useSearchParams();
-   const dispatch = useDispatch();
    const [title, setTitle] = useState();
    const [categories, setCategories] = useState([]);
    const timing = useRef(null);
    const [keyword, setKeyWord] = useState('');
    useEffect(() => {
-      const search = searchParams.get('search');
+      const q = searchParams.get('q');
       const id = searchParams.get('id');
       const name = searchParams.get('name');
-      if (id || name || search) {
+      if (id || name || q) {
          setTitle(name);
       } else {
          setTitle('Tất cả');

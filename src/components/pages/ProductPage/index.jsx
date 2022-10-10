@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 import Product from 'components/shareComponents/Product';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
-import { Spinner } from 'react-bootstrap';
+import { Alert, Spinner } from 'react-bootstrap';
 import { useSearchParams } from 'react-router-dom';
 import img_error from '../../../images/removebg.png';
 import styles from './ProductPage.module.scss';
@@ -20,6 +20,7 @@ function ProductPage(props) {
    const [searchParams] = useSearchParams();
    const [loading, setLoading] = useState(true);
    const [deleted, setDeleted] = useState(false);
+
    useEffect(() => {
       const id = searchParams.get('id');
       const q = searchParams.get('q');
@@ -46,6 +47,7 @@ function ProductPage(props) {
                <Spinner animation="grow" variant="info" />
             </div>
          )}
+
          {data.length > 0 ? (
             <div className={cln('product')}>
                {data.map((value, index) => {
