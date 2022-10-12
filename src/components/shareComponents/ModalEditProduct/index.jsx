@@ -26,8 +26,7 @@ ModalEditProduct.DefautlProps = {
 };
 
 function ModalEditProduct(props) {
-   const { show, handleHide, product, deleted, setDeleted } = props;
-   const dispatch = useDispatch();
+   const { show, handleHide, product, update, setUpdate, setDeleteId } = props;
    const [token, setToken] = useState();
    const [detailProduct, setDetailProduct] = useState(product);
    const [showError, setShowError] = useState({ update: false, delete: false });
@@ -107,7 +106,7 @@ function ModalEditProduct(props) {
          await Product_API.delete(product.productId, token);
          revokeImage();
          handleHide(false);
-         setDeleted(!deleted);
+         setDeleteId(product.productId);
          setLoading(false);
       } catch (error) {
          console.log('error', error);
@@ -137,7 +136,7 @@ function ModalEditProduct(props) {
          await Product_API.update(data, detailProduct.productId, token);
          handleHide(false);
          revokeImage();
-         setDeleted(!deleted);
+         setUpdate(!update);
          setLoading(false);
       } catch (error) {
          console.log('error', error);

@@ -19,8 +19,8 @@ function ProductPage(props) {
    const [data, setData] = useState([]);
    const [searchParams] = useSearchParams();
    const [loading, setLoading] = useState(true);
-   const [deleted, setDeleted] = useState(false);
-
+   const [deleteId, setDeleteId] = useState('');
+   const [update, setUpdate] = useState(false);
    useEffect(() => {
       const id = searchParams.get('id');
       const q = searchParams.get('q');
@@ -39,7 +39,18 @@ function ProductPage(props) {
          }
       };
       fetchProduct();
-   }, [searchParams, deleted]);
+   }, [searchParams, update]);
+   useEffect(() => {
+      if (deleteId === '') {
+         return;
+      } else {
+         setData(
+            data?.filter((item) => {
+               return item.productId != deleteId;
+            }),
+         );
+      }
+   }, [deleteId]);
    return (
       <div className={cln('wrapper')}>
          {loading && (
@@ -52,7 +63,13 @@ function ProductPage(props) {
             <div className={cln('product')}>
                {data.map((value, index) => {
                   return (
-                     <Product deleted={deleted} setDeleted={setDeleted} key={index} value={value} />
+                     <Product
+                        key={index}
+                        value={value}
+                        setDeleteId={setDeleteId}
+                        update={update}
+                        setUpdate={setUpdate}
+                     />
                   );
                })}
             </div>

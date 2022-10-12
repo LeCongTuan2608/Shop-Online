@@ -2,8 +2,8 @@
    height: 100%;
 }
 .container {
-   height: 100%;
-   padding: 20px 0 65px 0;
+   padding: 20px 0 20px 0;
+   margin-bottom: 50px;
    width: 100%;
 }
 .content {
@@ -54,4 +54,11 @@
       font-size: 20px;
       font-weight: 500;
    }
+}
+.message {
+   position: absolute !important;
+   right: 2%;
+   top: 5%;
+   animation: show 0.5s ease-in-out forwards;
+   z-index: 5;
 }

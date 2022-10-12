@@ -8,7 +8,6 @@ import img_fix from '../../../images/Construction.png';
 import ModalBuyProduct from '../ModalBuyProduct';
 import ModalEditProduct from '../ModalEditProduct';
 import styles from './Product.module.scss';
-
 const cln = classNames.bind(styles);
 
 Product.propTypes = {
@@ -25,7 +24,7 @@ const formatCash = (str) => {
    return str.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 };
 function Product(props) {
-   const { value, deleted, setDeleted } = props;
+   const { value, setDeleteId, update, setUpdate } = props;
 
    const [show, setShow] = useState(false);
    const token = window.localStorage.getItem('token');
@@ -64,9 +63,10 @@ function Product(props) {
                         <ModalEditProduct
                            product={value}
                            show={show}
-                           deleted={deleted}
-                           setDeleted={setDeleted}
                            handleHide={handleShow}
+                           setDeleteId={setDeleteId}
+                           update={update}
+                           setUpdate={setUpdate}
                         />
                      ) : (
                         <ModalBuyProduct product={value} show={show} handleHide={handleShow} />
