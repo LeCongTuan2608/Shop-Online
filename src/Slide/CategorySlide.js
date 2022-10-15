@@ -1,21 +1,13 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import User from 'API/User';
+import { createSlice } from '@reduxjs/toolkit';
 
-export const categoryProduct = createAsyncThunk('category', async (data) => {
-   return data;
-});
-const CategorySlice = createSlice({
-   name: 'categoryid',
+export default createSlice({
+   name: 'category',
    initialState: {
-      current: {},
+      name: {},
    },
-   reducers: {},
-   extraReducers: (builder) => {
-      builder.addCase(categoryProduct.fulfilled, (state, action) => {
-         state.current = action.payload;
-      });
+   reducers: {
+      categoryDispatch: (state, action) => {
+         state.name = action.payload;
+      },
    },
 });
-
-const { reducer } = CategorySlice;
-export default reducer;

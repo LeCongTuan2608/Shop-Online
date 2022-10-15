@@ -11,7 +11,7 @@ import * as yup from 'yup';
 import SignUp from '../SignUp';
 import styles from './Login.module.scss';
 import PropTypes from 'prop-types';
-
+import categorySlice from '../../../../../Slide/CategorySlide';
 const cln = classNames.bind(styles);
 Login.propTypes = {
    setLogin: PropTypes.func,
