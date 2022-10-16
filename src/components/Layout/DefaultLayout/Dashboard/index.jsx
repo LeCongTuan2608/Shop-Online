@@ -35,6 +35,15 @@ function Dashboard(props) {
             minWidth: zoomOut == true ? '67px' : '190px',
          }}>
          <Navbar className={cln('navbar')} variant="dark">
+            <div className={cln('show-hide')} style={zoomOut ? { right: '-15%' } : undefined}>
+               <Button
+                  variant="outline-warning"
+                  onClick={handleClick}
+                  style={zoomOut ? { transform: 'rotate(180deg)' } : undefined}>
+                  <ArrowCircleLeftOutlinedIcon />
+               </Button>
+               {zoomOut ? undefined : <span className={cln('brand')}>SoPa</span>}
+            </div>
             {login.token && (
                <div className={cln('user')}>
                   <div className={cln('user-card')}>
@@ -59,7 +68,7 @@ function Dashboard(props) {
                              flex: '1',
                           }
                         : undefined
-                     : { paddingTop: '100px' }
+                     : { paddingTop: '50px', flex: '1' }
                }>
                <div>
                   {publicRoutes.map((route, index) => {
@@ -120,14 +129,6 @@ function Dashboard(props) {
                <Login setLogin={setLogin} zoomOut={zoomOut} />
             )}
          </Navbar>
-         <div className={cln('show-hide')} style={zoomOut ? { right: '-15%' } : undefined}>
-            <Button
-               variant="outline-warning"
-               onClick={handleClick}
-               style={zoomOut ? { transform: 'rotate(180deg)' } : undefined}>
-               <ArrowCircleLeftOutlinedIcon />
-            </Button>
-         </div>
       </div>
    );
 }

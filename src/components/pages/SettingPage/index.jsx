@@ -62,7 +62,7 @@ function SettingPage(props) {
                                           type="email"
                                           placeholder="Enter email"
                                           defaultValue={infoUser?.email}
-                                          disabled={edit}
+                                          disabled
                                        />
                                     </Form.Group>
                                     <div
@@ -95,7 +95,7 @@ function SettingPage(props) {
                                        <Form.Control
                                           type="text"
                                           placeholder="Enter address"
-                                          defaultValue={infoUser?.email}
+                                          defaultValue={infoUser?.address}
                                           disabled={edit}
                                        />
                                     </Form.Group>

@@ -19,7 +19,6 @@ function HomePage(props) {
          screenY: e.clientY,
       });
    };
-
    return (
       <div className={cln('wrapper')}>
          <div className={cln('container')}>

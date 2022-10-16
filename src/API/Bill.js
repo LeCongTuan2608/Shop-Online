@@ -8,9 +8,19 @@ const Bill = {
       };
       return axiosClient.get(url, config);
    },
-   addBill() {
+   addBill(data, token) {
       const url = `bills/add_bill`;
-      return axiosClient.post(url);
+      const config = {
+         headers: { Authorization: `${token.tokenType} ${token.token}` },
+      };
+      return axiosClient.post(url, data, config);
+   },
+   getBillUser(params, token) {
+      const url = `bills/search_bill?user_email=${params}`;
+      const config = {
+         headers: { Authorization: `${token.tokenType} ${token.token}` },
+      };
+      return axiosClient.get(url, config);
    },
    updateStatus(id, token) {
       const url = `bills/update_bill_status/${id}`;

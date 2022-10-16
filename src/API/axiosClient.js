@@ -2,7 +2,7 @@ import axios from 'axios';
 // http://118.69.69.160:8080/APISERVER
 //http://localhost:1200
 const axiosClient = axios.create({
-   baseURL: 'http://118.69.69.160:8080/APISERVER/api/',
+   baseURL: 'http://localhost:1200/api/',
    headers: {
       'Content-Type': 'application/JSON',
    },

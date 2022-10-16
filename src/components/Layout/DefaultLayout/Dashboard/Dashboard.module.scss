@@ -11,7 +11,7 @@
    height: 100%;
    flex-direction: column;
    justify-content: space-between !important;
-   gap: 40px;
+   gap: 20px;
    & .user {
       width: 100%;
       padding: 5px 12px;
@@ -101,11 +101,18 @@
    border-left: 6px solid rgb(32, 207, 237);
 }
 .show-hide {
-   position: absolute;
-   top: 12%;
-   right: -5%;
-   z-index: 5;
-   border-radius: 100rem;
+   padding: 0 15px;
+   display: flex;
+   width: 100%;
+   align-items: center;
+   gap: 15%;
+   & .brand {
+      color: rgb(61, 222, 77);
+      transition: ease-in-out 0.2s;
+      font-weight: 600;
+      font-size: 25px;
+      cursor: default;
+   }
    & button {
       padding: 0;
       border-radius: 10px;
