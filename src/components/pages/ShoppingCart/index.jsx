@@ -27,15 +27,17 @@ function ShoppingCart(props) {
    const [searchParams, setSearchParams] = useSearchParams();
    const [purchaseOrder, setPurchaseOrder] = useState([]);
    const [loadPurchase, setLoadPurchase] = useState(false);
+   const [token, setToken] = useState();
    useEffect(() => {
       const getEmail = JSON.parse(window.localStorage.getItem('infoUser'));
-      const token = {
+      const getToken = {
          token: window.localStorage.getItem('token'),
          tokenType: window.localStorage.getItem('tokenType'),
       };
+      setToken(getToken);
       const fetchPurchase = async () => {
          try {
-            const response = await Bill.getBillUser(getEmail.email, token);
+            const response = await Bill.getBillUser(getEmail.email, getToken);
             setPurchaseOrder(response.data.result);
          } catch (error) {
             console.log('error', error);
@@ -185,24 +187,11 @@ function ShoppingCart(props) {
                      style={{ height: purchaseOrder?.length > 0 ? 'auto' : '100%' }}>
                      {purchaseOrder?.length > 0 ? (
                         <div className={cln('content')}>
-                           <Table striped bordered hover>
-                              <thead>
-                                 <tr>
-                                    <th>STT</th>
-                                    <th>Full Name</th>
-                                    <th>Email</th>
-                                    <th>purchaseDate</th>
-                                    <th>ID</th>
-                                    <th>Price</th>
-                                    <th>Status</th>
-                                 </tr>
-                              </thead>
-                              <tbody>
-                                 {purchaseOrder?.map((value, index) => {
-                                    return <Order value={value} key={index} stt={index + 1} />;
-                                 })}
-                              </tbody>
-                           </Table>
+                           {purchaseOrder?.map((value, index) => {
+                              return (
+                                 <Order value={value} key={index} stt={index + 1} token={token} />
+                              );
+                           })}
                         </div>
                      ) : (
                         <div className={cln('error')}>

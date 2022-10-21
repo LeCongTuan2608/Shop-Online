@@ -74,11 +74,11 @@
       color: var(--color-text-white);
       color: var();
       align-items: center;
-      // border-radius: 6px;
-      border-bottom-right-radius: 6px;
-      border-top-right-radius: 6px;
-      border-bottom-left-radius: 2px;
-      border-top-left-radius: 2px;
+      border-radius: 6px;
+      // border-bottom-right-radius: 6px;
+      // border-top-right-radius: 6px;
+      // border-bottom-left-radius: 2px;
+      // border-top-left-radius: 2px;
       & svg {
          margin-right: 15px;
       }
@@ -98,7 +98,6 @@
    background-color: var(--color-light-green);
    color: var(--color-text-black);
    font-weight: 700;
-   border-left: 6px solid rgb(32, 207, 237);
 }
 .show-hide {
    padding: 0 15px;

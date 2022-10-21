@@ -34,8 +34,9 @@ function BillPage(props) {
                response = await Bill.getSuccess(token);
             } else {
                response = await Bill.getAll(token);
+               console.log('response', response);
             }
-            setBills(response.data);
+            setBills(response.data.result.reverse());
          } catch (error) {
             console.log('error', error);
          }
@@ -77,7 +78,7 @@ function BillPage(props) {
             <DropdownButton
                variant="outline-primary"
                id="dropdown-basic-button"
-               title={`${title} (${bills?.result.length})`}>
+               title={`${title} (${bills?.length})`}>
                <Dropdown.Item id="delivering" onClick={handleClick}>
                   Delivering
                </Dropdown.Item>
@@ -101,7 +102,7 @@ function BillPage(props) {
                </tr>
             </thead>
             <tbody>
-               {bills?.result.map((value, index) => {
+               {bills?.map((value, index) => {
                   return (
                      <Field
                         key={index}
@@ -114,7 +115,7 @@ function BillPage(props) {
                      />
                   );
                })}
-               {bills?.result.length === 0 && (
+               {bills?.length === 0 && (
                   <tr style={{ textAlign: 'center' }}>
                      <td colSpan={6}>
                         No orders {title === 'delivering' ? 'delivering' : 'delivered'}!

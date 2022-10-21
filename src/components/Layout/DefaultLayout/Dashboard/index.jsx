@@ -8,6 +8,7 @@ import styles from './Dashboard.module.scss';
 import ArrowCircleLeftOutlinedIcon from '@mui/icons-material/ArrowCircleLeftOutlined';
 import Login from './Login';
 import Logout from './Logout';
+import { useSelector } from 'react-redux';
 
 const cln = classNames.bind(styles);
 Dashboard.propTypes = {
@@ -19,6 +20,7 @@ Dashboard.defaultProps = {
 
 function Dashboard(props) {
    const { user } = props;
+   const getInfoUser = useSelector((state) => state.user?.info);
 
    const [login, setLogin] = useState(user);
    const [zoomOut, setZoomOut] = useState(false);
@@ -47,12 +49,18 @@ function Dashboard(props) {
             {login.token && (
                <div className={cln('user')}>
                   <div className={cln('user-card')}>
-                     <div className={cln('card-img')}>{login.infoUser.fullName.slice(0, 1)}</div>
+                     <div className={cln('card-img')}>
+                        {getInfoUser.fullName?.slice(0, 1) || login.infoUser.fullName?.slice(0, 1)}
+                     </div>
                   </div>
                   {zoomOut ? undefined : (
                      <div className={cln('info')}>
-                        <span className={cln('info-name')}>{login.infoUser.fullName}</span>
-                        <span className={cln('info-email')}>{login.infoUser.email}</span>
+                        <span className={cln('info-name')}>
+                           {getInfoUser.fullName || login.infoUser.fullName}
+                        </span>
+                        <span className={cln('info-email')}>
+                           {getInfoUser.email || login.infoUser.email}
+                        </span>
                      </div>
                   )}
                </div>

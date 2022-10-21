@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import User from 'API/User';
 
-export const userLogin = createAsyncThunk('user/login', async (data) => {
+export const userLogin = createAsyncThunk('user', async (data) => {
    let results;
    await User.login(data)
       .then(async (success) => {
@@ -20,6 +20,9 @@ export const userLogin = createAsyncThunk('user/login', async (data) => {
       });
 
    return results;
+});
+export const userUpdate = createAsyncThunk('user', async (data) => {
+   return data;
 });
 export default createSlice({
    name: 'user',

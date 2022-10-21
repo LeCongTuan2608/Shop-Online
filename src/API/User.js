@@ -9,9 +9,12 @@ const User = {
       const url = 'users/register';
       return axiosClient.post(url, data);
    },
-   update(data) {
-      const url = `users/update_user/${data.email}`;
-      return axiosClient.put(url, data);
+   update(data, token) {
+      const url = `users/update_user`;
+      const config = {
+         headers: { Authorization: `${token.tokenType} ${token.token}` },
+      };
+      return axiosClient.put(url, data, config);
    },
    getByJWT(token) {
       const url = 'users/get_user';

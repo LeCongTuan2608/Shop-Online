@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { Outlet, useLocation } from 'react-router-dom';
 import { publicRoutes } from 'routes';
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 const cln = classNames.bind(styles);
 DefaultLayout.propTypes = {
    children: PropTypes.element,

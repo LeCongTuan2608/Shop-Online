@@ -29,9 +29,12 @@ const Bill = {
       };
       return axiosClient.put(url, {}, config);
    },
-   getById(id) {
+   getById(id, token) {
       const url = `bills/get_bill/${id}`;
-      return axiosClient.post(url);
+      const config = {
+         headers: { Authorization: `${token.tokenType} ${token.token}` },
+      };
+      return axiosClient.get(url, config);
    },
    getSuccess(token) {
       const url = `bills/get_bill_success`;

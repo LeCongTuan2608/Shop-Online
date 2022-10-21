@@ -53,6 +53,11 @@ function AccountManagement(props) {
                      </tr>
                   );
                })}
+               {user?.length === 0 && (
+                  <tr style={{ textAlign: 'center' }}>
+                     <td colSpan={6}>No user!</td>
+                  </tr>
+               )}
             </tbody>
          </Table>
       </div>
