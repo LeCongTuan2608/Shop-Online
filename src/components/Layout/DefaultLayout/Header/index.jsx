@@ -1,4 +1,5 @@
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
+import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 import Category from 'API/Category';
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
@@ -6,6 +7,8 @@ import { useEffect, useRef, useState } from 'react';
 import { Button, Dropdown, DropdownButton, Form, InputGroup } from 'react-bootstrap';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import styles from './Header.module.scss';
+import { useDispatch } from 'react-redux';
+import dashboard from '../../../../Slide/Dashboard';
 const cln = classNames.bind(styles);
 Header.propTypes = {
    setCategory: PropTypes.func,
@@ -21,10 +24,13 @@ function Header(props) {
    const [categories, setCategories] = useState([]);
    const timing = useRef(null);
    const [keyword, setKeyWord] = useState('');
+   const dispatch = useDispatch();
+
    useEffect(() => {
       const q = searchParams.get('q');
       const id = searchParams.get('id');
       const name = searchParams.get('name');
+
       if (id || name || q) {
          setTitle(name);
       } else {
@@ -72,17 +78,20 @@ function Header(props) {
    };
    return (
       <div className={cln('wrapper')}>
-         <InputGroup className={cln('input-group')}>
-            <Form.Control
-               type="search"
-               placeholder="Search"
-               value={keyword}
-               onChange={handleSearch}
-            />
-            <Button className={cln('button')} variant="outline-secondary" id="button-addon2">
-               <SearchOutlinedIcon />
-            </Button>
-         </InputGroup>
+         <div className={cln('header')}>
+            <InputGroup className={cln('input-group')}>
+               <Form.Control
+                  type="search"
+                  placeholder="Search"
+                  value={keyword}
+                  onChange={handleSearch}
+               />
+               <Button className={cln('button')} variant="outline-secondary" id="button-addon2">
+                  <SearchOutlinedIcon />
+               </Button>
+            </InputGroup>
+         </div>
+
          {location.pathname === '/product' && (
             <div className={cln('options')}>
                <DropdownButton

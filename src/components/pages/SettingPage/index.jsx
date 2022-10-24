@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import styles from './SettingPage.module.scss';
-import { Button, Form, Modal, Spinner, Tab, Tabs } from 'react-bootstrap';
+import { Alert, Button, Form, Modal, Spinner, Tab, Tabs } from 'react-bootstrap';
 import img_person from '../../../images/person.png';
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -27,6 +27,7 @@ function SettingPage(props) {
    const [loading, setLoading] = useState(true);
    const [token, setToken] = useState();
    const [initiaValue, setInitiaValue] = useState();
+   const [showError, setShowError] = useState(false);
 
    const dispatch = useDispatch();
    const inputName = useRef();
@@ -49,6 +50,12 @@ function SettingPage(props) {
    }, []);
 
    let form = { ...JSON.parse(window.localStorage.getItem('infoUser')), password: '' };
+   const handleShowAlert = () => {
+      setShowError(true);
+      setTimeout(() => {
+         setShowError(false);
+      }, 2500);
+   };
    const handleSubmitForm = async (values) => {
       setInitiaValue({
          fullName: values.fullName,
@@ -68,12 +75,12 @@ function SettingPage(props) {
             const infoUser = await User.getByJWT(token);
             await dispatch(userUpdate(infoUser.data)).unwrap();
             localStorage.setItem('infoUser', JSON.stringify(infoUser.data));
+            handleShowAlert();
          });
          setEdit(true);
       } catch (error) {
          console.log('error', error);
-         const response = error.response.data;
-         console.log('response', response);
+         handleShowAlert();
       }
    };
 
@@ -83,6 +90,11 @@ function SettingPage(props) {
             <div className={cln('loading')}>
                <Spinner animation="grow" variant="info" />
             </div>
+         )}
+         {showError && (
+            <Alert className={cln('message')} variant={showError ? 'success' : 'danger'}>
+               {showError ? 'Update success!!' : 'Update failed!!'}
+            </Alert>
          )}
          <div className={cln('wrapper')}>
             <div className={cln('wrapper-container')}>

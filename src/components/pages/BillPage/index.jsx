@@ -19,13 +19,13 @@ function BillPage(props) {
    const [showError, setShowError] = useState(false);
    const [showSucc, setShowSucc] = useState(false);
 
-   const token = {
-      token: window.localStorage.getItem('token'),
-      tokenType: window.localStorage.getItem('tokenType'),
-   };
    useEffect(() => {
       const q = searchParams.get('q');
-      const fechAllBill = async () => {
+      const token = {
+         token: window.localStorage.getItem('token'),
+         tokenType: window.localStorage.getItem('tokenType'),
+      };
+      const fetchAllBill = async () => {
          let response;
          try {
             if (q === 'delivering') {
@@ -34,15 +34,15 @@ function BillPage(props) {
                response = await Bill.getSuccess(token);
             } else {
                response = await Bill.getAll(token);
-               console.log('response', response);
             }
             setBills(response.data.result.reverse());
+            setLoading(false);
          } catch (error) {
             console.log('error', error);
+            setLoading(false);
          }
       };
-      fechAllBill();
-      setLoading(false);
+      fetchAllBill();
    }, [searchParams, update]);
    const handleClick = async (e) => {
       if (e.target.id === 'delivering') {
@@ -58,7 +58,7 @@ function BillPage(props) {
       setSearchParams(searchParams);
    };
    return (
-      <div className={cln('wrapper')}>
+      <>
          {loading && (
             <div className={cln('loading')}>
                <Spinner animation="grow" variant="info" />
@@ -74,57 +74,59 @@ function BillPage(props) {
                Update successful
             </Alert>
          )}
-         <div className={cln('header')}>
-            <DropdownButton
-               variant="outline-primary"
-               id="dropdown-basic-button"
-               title={`${title} (${bills?.length})`}>
-               <Dropdown.Item id="delivering" onClick={handleClick}>
-                  Delivering
-               </Dropdown.Item>
-               <Dropdown.Item id="delivered" onClick={handleClick}>
-                  Delivered
-               </Dropdown.Item>
-               <Dropdown.Item id="all" onClick={handleClick}>
-                  All
-               </Dropdown.Item>
-            </DropdownButton>
-         </div>
-         <Table striped bordered hover>
-            <thead>
-               <tr>
-                  <th>ID</th>
-                  <th>Purchaser Name</th>
-                  <th>Email</th>
-                  <th>Purchase Date</th>
-                  <th>Price</th>
-                  <th>Status</th>
-               </tr>
-            </thead>
-            <tbody>
-               {bills?.map((value, index) => {
-                  return (
-                     <Field
-                        key={index}
-                        bill={value}
-                        update={update}
-                        setUpdate={setUpdate}
-                        setLoading={setLoading}
-                        setShowError={setShowError}
-                        setShowSucc={setShowSucc}
-                     />
-                  );
-               })}
-               {bills?.length === 0 && (
-                  <tr style={{ textAlign: 'center' }}>
-                     <td colSpan={6}>
-                        No orders {title === 'delivering' ? 'delivering' : 'delivered'}!
-                     </td>
+         <div className={cln('wrapper')}>
+            <div className={cln('header')}>
+               <DropdownButton
+                  variant="outline-primary"
+                  id="dropdown-basic-button"
+                  title={`${title} (${bills?.length})`}>
+                  <Dropdown.Item id="delivering" onClick={handleClick}>
+                     Delivering
+                  </Dropdown.Item>
+                  <Dropdown.Item id="delivered" onClick={handleClick}>
+                     Delivered
+                  </Dropdown.Item>
+                  <Dropdown.Item id="all" onClick={handleClick}>
+                     All
+                  </Dropdown.Item>
+               </DropdownButton>
+            </div>
+            <Table striped bordered hover>
+               <thead>
+                  <tr>
+                     <th>ID</th>
+                     <th>Purchaser Name</th>
+                     <th>Email</th>
+                     <th>Purchase Date</th>
+                     <th>Price</th>
+                     <th>Status</th>
                   </tr>
-               )}
-            </tbody>
-         </Table>
-      </div>
+               </thead>
+               <tbody>
+                  {bills?.map((value, index) => {
+                     return (
+                        <Field
+                           key={index}
+                           bill={value}
+                           update={update}
+                           setUpdate={setUpdate}
+                           setLoading={setLoading}
+                           setShowError={setShowError}
+                           setShowSucc={setShowSucc}
+                        />
+                     );
+                  })}
+                  {bills?.length === 0 && (
+                     <tr style={{ textAlign: 'center' }}>
+                        <td colSpan={6}>
+                           No orders {title === 'delivering' ? 'delivering' : 'delivered'}!
+                        </td>
+                     </tr>
+                  )}
+               </tbody>
+            </Table>
+         </div>
+      </>
    );
 }
 

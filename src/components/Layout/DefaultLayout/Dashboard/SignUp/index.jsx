@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
-import { Button, Col, Form, Modal, Nav, Row, Spinner } from 'react-bootstrap';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import GoogleIcon from '@mui/icons-material/Google';
-import classNames from 'classnames/bind';
-import styles from './SignUp.module.scss';
-import PropTypes from 'prop-types';
-import { Formik } from 'formik';
-import * as yup from 'yup';
 import User from 'API/User';
+import classNames from 'classnames/bind';
+import { Formik } from 'formik';
+import PropTypes from 'prop-types';
+import { useState } from 'react';
+import { Button, Col, Form, Modal, Spinner } from 'react-bootstrap';
+import * as yup from 'yup';
+import styles from './SignUp.module.scss';
 
 const cln = classNames.bind(styles);
 

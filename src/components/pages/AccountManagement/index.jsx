@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import { useState } from 'react';
-import { Table } from 'react-bootstrap';
+import { Spinner, Table } from 'react-bootstrap';
 import styled from './AccountManagement.module.scss';
 import PropTypes from 'prop-types';
 import { useEffect } from 'react';
@@ -11,56 +11,65 @@ AccountManagement.propTypes = {};
 
 function AccountManagement(props) {
    const [user, setUser] = useState();
+   const [loading, setLoading] = useState(true);
    useEffect(() => {
       const token = {
          token: window.localStorage.getItem('token'),
          tokenType: window.localStorage.getItem('tokenType'),
       };
-      const fechUser = async () => {
+      const fetchUser = async () => {
          try {
             const response = await User.getAll(token);
-            console.log('response', response);
             setUser(response.data.result);
+            setLoading(false);
          } catch (error) {
             console.log('error', error);
+            setLoading(false);
          }
       };
-      fechUser();
+      fetchUser();
    }, []);
    return (
-      <div className={cln('wrapper')}>
-         <Table striped bordered hover>
-            <thead>
-               <tr>
-                  <th>#</th>
-                  <th>Email</th>
-                  <th>Full Name</th>
-                  <th>Phone</th>
-                  <th>Address</th>
-                  <th>PurchaseInvoice</th>
-               </tr>
-            </thead>
-            <tbody>
-               {user?.map((value, index) => {
-                  return (
-                     <tr key={index}>
-                        <td>{index + 1}</td>
-                        <td>{value.email}</td>
-                        <td>{value.fullName}</td>
-                        <td>{value.phone}</td>
-                        <td>{value.address}</td>
-                        <td>{value.purchaseInvoice}</td>
-                     </tr>
-                  );
-               })}
-               {user?.length === 0 && (
-                  <tr style={{ textAlign: 'center' }}>
-                     <td colSpan={6}>No user!</td>
+      <>
+         {loading && (
+            <div className={cln('loading')}>
+               <Spinner animation="grow" variant="info" />
+            </div>
+         )}
+         <div className={cln('wrapper')}>
+            <Table striped bordered hover>
+               <thead>
+                  <tr>
+                     <th>#</th>
+                     <th>Email</th>
+                     <th>Full Name</th>
+                     <th>Phone</th>
+                     <th>Address</th>
+                     <th>PurchaseInvoice</th>
                   </tr>
-               )}
-            </tbody>
-         </Table>
-      </div>
+               </thead>
+               <tbody>
+                  {user?.map((value, index) => {
+                     return (
+                        <tr key={index}>
+                           <td>{index + 1}</td>
+                           <td>{value.email}</td>
+                           <td>{value.fullName}</td>
+                           <td>{value.phone}</td>
+                           <td>{value.address}</td>
+                           <td>{value.purchaseInvoice}</td>
+                        </tr>
+                     );
+                  })}
+                  {user?.length === 0 && (
+                     <tr style={{ textAlign: 'center' }}>
+                        <td colSpan={6}>No user!</td>
+                     </tr>
+                  )}
+               </tbody>
+            </Table>
+         </div>
+      </>
    );
 }
 

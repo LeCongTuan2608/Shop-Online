@@ -9,6 +9,7 @@ import ArrowCircleLeftOutlinedIcon from '@mui/icons-material/ArrowCircleLeftOutl
 import Login from './Login';
 import Logout from './Logout';
 import { useSelector } from 'react-redux';
+import { useMediaQuery } from 'react-responsive';
 
 const cln = classNames.bind(styles);
 Dashboard.propTypes = {
@@ -19,22 +20,40 @@ Dashboard.defaultProps = {
 };
 
 function Dashboard(props) {
-   const { user } = props;
+   const { user, dashboard, setDashboard } = props;
    const getInfoUser = useSelector((state) => state.user?.info);
-
    const [login, setLogin] = useState(user);
    const [zoomOut, setZoomOut] = useState(false);
    const { pathname } = useLocation();
+   const isMediaMobile = useMediaQuery({ query: '(max-width: 415px)' });
+   const isMediaScreen750 = useMediaQuery({ query: '(max-width: 750px)' });
    const handleClick = () => {
-      setZoomOut(!zoomOut);
-      window.localStorage.setItem('zoomOut', zoomOut);
+      if (isMediaMobile) {
+         setDashboard(!dashboard);
+      } else {
+         setZoomOut(!zoomOut);
+         window.localStorage.setItem('zoomOut', zoomOut);
+      }
    };
+   useEffect(() => {
+      if (isMediaScreen750) {
+         setZoomOut(true);
+      } else {
+         setZoomOut(false);
+      }
+      if (!isMediaMobile) {
+         setDashboard(false);
+      } else {
+         setZoomOut(false);
+      }
+   }, [isMediaMobile, isMediaScreen750]);
    return (
       <div
          className={cln('wrapper')}
          style={{
-            maxWidth: zoomOut == true ? '67px' : '240px',
-            minWidth: zoomOut == true ? '67px' : '190px',
+            maxWidth: zoomOut === true ? '67px' : '240px',
+            minWidth: zoomOut === true ? '67px' : '190px',
+            display: dashboard ? 'none' : 'block',
          }}>
          <Navbar className={cln('navbar')} variant="dark">
             <div className={cln('show-hide')} style={zoomOut ? { right: '-15%' } : undefined}>

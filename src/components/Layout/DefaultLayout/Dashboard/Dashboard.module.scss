@@ -122,3 +122,22 @@
       transition: ease-in-out 0.5s;
    }
 }
+@keyframes show {
+   0% {
+      transform: translateX(-100%);
+   }
+   100% {
+      transform: translateX(0%);
+   }
+}
+@media screen and (max-width: 415px) {
+   .wrapper {
+      display: none;
+      position: absolute;
+      z-index: 5;
+      top: 0;
+      bottom: 0;
+      animation: ease-in-out 0.5s;
+      animation-name: show;
+   }
+}

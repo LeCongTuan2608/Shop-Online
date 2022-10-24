@@ -2,7 +2,7 @@ import MoodBadOutlinedIcon from '@mui/icons-material/MoodBadOutlined';
 import Bill from 'API/Bill';
 import classNames from 'classnames/bind';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Alert, Button, Container, Nav, Navbar, Tab, Table, Tabs } from 'react-bootstrap';
+import { Alert, Button, Container, Nav, Navbar, Spinner, Tab, Table, Tabs } from 'react-bootstrap';
 import { useSearchParams } from 'react-router-dom';
 import Product from '../ShoppingCart/Product';
 import ModalPayment from './ModalPayment';
@@ -18,6 +18,7 @@ function ShoppingCart(props) {
    const [productCart, setProductCart] = useState(
       JSON.parse(window.localStorage.getItem('cartProduct'))?.reverse(),
    );
+   const [loading, setLoading] = useState(true);
    const [modalShow, setModalShow] = useState(false);
    const [key, setKey] = useState('cart');
    const inputSelectAll = useRef();
@@ -41,6 +42,7 @@ function ShoppingCart(props) {
             setPurchaseOrder(response.data.result);
          } catch (error) {
             console.log('error', error);
+            setLoading(false);
          }
       };
       fetchPurchase();
@@ -92,6 +94,11 @@ function ShoppingCart(props) {
    }, [selected]);
    return (
       <>
+         {loading && (
+            <div className={cln('loading')}>
+               <Spinner animation="grow" variant="info" />
+            </div>
+         )}
          {showError && (
             <Alert className={cln('message')} variant="warning">
                Please select the product!!
@@ -168,15 +175,6 @@ function ShoppingCart(props) {
                            <Button style={{ width: '150px' }} variant="warning" onClick={handlePay}>
                               Pay
                            </Button>
-                           <ModalPayment
-                              show={modalShow}
-                              onHide={() => setModalShow(false)}
-                              selected={selected}
-                              handleDelete={handleDelete}
-                              loadPurchase={loadPurchase}
-                              setLoadPurchase={setLoadPurchase}
-                              totalPrice={totalPrice}
-                           />
                         </Nav>
                      </Container>
                   </Navbar>
@@ -189,20 +187,37 @@ function ShoppingCart(props) {
                         <div className={cln('content')}>
                            {purchaseOrder?.map((value, index) => {
                               return (
-                                 <Order value={value} key={index} stt={index + 1} token={token} />
+                                 <Order
+                                    value={value}
+                                    key={index}
+                                    stt={index + 1}
+                                    token={token}
+                                    setLoading={setLoading}
+                                 />
                               );
                            })}
                         </div>
                      ) : (
-                        <div className={cln('error')}>
-                           <MoodBadOutlinedIcon />
-                           <span>You don't have any orders!!</span>
-                        </div>
+                        !loading && (
+                           <div className={cln('error')}>
+                              <MoodBadOutlinedIcon />
+                              <span>You don't have any orders!!</span>
+                           </div>
+                        )
                      )}
                   </div>
                </Tab>
             </Tabs>
          </div>
+         <ModalPayment
+            show={modalShow}
+            onHide={() => setModalShow(false)}
+            selected={selected}
+            handleDelete={handleDelete}
+            loadPurchase={loadPurchase}
+            setLoadPurchase={setLoadPurchase}
+            totalPrice={totalPrice}
+         />
       </>
    );
 }

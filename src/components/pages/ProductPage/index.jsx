@@ -24,6 +24,7 @@ function ProductPage(props) {
    useEffect(() => {
       const id = searchParams.get('id');
       const q = searchParams.get('q');
+      setLoading(true);
       const fetchProduct = async () => {
          try {
             let response = await Product_API.search({
@@ -52,38 +53,47 @@ function ProductPage(props) {
       }
    }, [deleteId]);
    return (
-      <div className={cln('wrapper')}>
+      <>
          {loading && (
             <div className={cln('loading')}>
                <Spinner animation="grow" variant="info" />
             </div>
          )}
-
-         {data?.length > 0 ? (
-            <div className={cln('product')}>
-               {data.map((value, index) => {
-                  return (
-                     <Product
-                        key={index}
-                        value={value}
-                        setDeleteId={setDeleteId}
-                        update={update}
-                        setUpdate={setUpdate}
-                     />
-                  );
-               })}
-            </div>
-         ) : (
-            <div className={cln('error')}>
-               <div className={cln('error-img')}>
-                  <img src={img_error} alt="" />
+         <div className={cln('wrapper')}>
+            {data?.length > 0 ? (
+               <div className={cln('product')}>
+                  {data.map((value, index) => {
+                     return (
+                        <Product
+                           key={index}
+                           value={value}
+                           setDeleteId={setDeleteId}
+                           update={update}
+                           setUpdate={setUpdate}
+                        />
+                     );
+                  })}
                </div>
-               <div className={cln('error-title')}>
-                  <span>The website is down, please reload!</span>
+            ) : data?.length === 0 && !loading ? (
+               <div className={cln('error')}>
+                  <div className={cln('error-title')}>
+                     <span>No product found!!</span>
+                  </div>
                </div>
-            </div>
-         )}
-      </div>
+            ) : (
+               !loading && (
+                  <div className={cln('error')}>
+                     <div className={cln('error-img')}>
+                        <img src={img_error} alt="" />
+                     </div>
+                     <div className={cln('error-title')}>
+                        <span>Website not working, please reload!</span>
+                     </div>
+                  </div>
+               )
+            )}
+         </div>
+      </>
    );
 }
 

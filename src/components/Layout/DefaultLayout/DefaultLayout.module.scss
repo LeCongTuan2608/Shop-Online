@@ -35,3 +35,46 @@
       display: none;
    }
 }
+.header {
+   display: none;
+}
+@media screen and (max-width: 415px) {
+   .wrapper {
+      display: block;
+   }
+   .container {
+      height: 100%;
+   }
+   .header {
+      background-color: white;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 5;
+      height: 50px;
+      padding: 0 10px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 120px;
+      & .brand {
+         color: rgb(61, 222, 77);
+         transition: ease-in-out 0.2s;
+         font-weight: 600;
+         font-size: 25px;
+         cursor: default;
+      }
+   }
+   .container {
+      padding-top: 50px;
+   }
+   .content-wrapper {
+      padding: 0;
+   }
+   .content {
+      &::-webkit-scrollbar {
+         display: none;
+      }
+   }
+}

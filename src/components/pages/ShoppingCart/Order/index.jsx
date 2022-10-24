@@ -19,15 +19,17 @@ const formatCash = (str) => {
    return str?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 };
 function Order(props) {
-   const { value, stt, token } = props;
+   const { value, stt, token, setLoading } = props;
    const [infoBill, setInfoBill] = useState();
    useEffect(() => {
       const fechInfoBill = async () => {
          try {
             const response = await Bill.getById(value.billId, token);
             setInfoBill(response.data.result[0]);
+            setLoading(false);
          } catch (error) {
             console.log('error', error);
+            setLoading(false);
          }
       };
       fechInfoBill();

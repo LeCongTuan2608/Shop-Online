@@ -67,4 +67,30 @@
    animation: show 0.5s ease-in-out forwards;
    z-index: 5;
 }
+.loading {
+   position: absolute;
+   top: 0;
+   right: 0;
+   bottom: 0;
+   left: 0;
+   background-color: rgba(145, 145, 145, 0.295);
+   display: flex;
+   flex: 1;
+   justify-content: center;
+   align-items: center;
+   z-index: 3;
+}
 ///
+@media screen and (max-width: 415px) {
+   .container {
+      margin-bottom: 110px !important;
+   }
+   .navbar-bottom {
+      height: 120px;
+   }
+   .container-contents {
+      display: grid !important;
+      grid-template-columns: auto auto;
+      text-align: center;
+   }
+}

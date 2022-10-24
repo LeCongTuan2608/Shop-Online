@@ -4,12 +4,17 @@
    display: flex;
    padding: 10px 50px;
    gap: 20%;
-
-   & .input-group {
-      max-width: 45%;
-      flex: 1;
-      box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 4px;
-      border-radius: 7px;
+   & .header {
+      width: 100%;
+      & > button {
+         display: none;
+      }
+      & .input-group {
+         max-width: 80%;
+         flex: 1;
+         box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 4px;
+         border-radius: 7px;
+      }
    }
    & .button {
       background-color: var(--color-light-green);
@@ -23,6 +28,48 @@
          & #dropdown-basic-button {
             display: flex;
             justify-content: flex-end;
+         }
+      }
+   }
+}
+@media screen and(max-width: 415px) {
+   .wrapper {
+      display: block;
+      padding: 10px;
+      & .header {
+         display: flex;
+         align-items: center;
+         margin-bottom: 20px;
+         & button {
+            display: block;
+            width: 40px;
+            height: 40px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            & svg {
+               flex: 1;
+               vertical-align: middle;
+               cursor: pointer;
+            }
+         }
+         & .input-group {
+            max-width: 80%;
+            flex: 1;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 4px;
+            border-radius: 7px;
+            margin: 0 auto;
+         }
+      }
+      & .options {
+         & > div {
+            display: block;
+            justify-content: flex-end;
+            & #dropdown-basic-button {
+               display: flex;
+               justify-content: flex-end;
+            }
          }
       }
    }

@@ -21,14 +21,16 @@ function AddCategory(props) {
    const [showSucc, setShowSucc] = useState(false);
    const [inputSearch, setInputSearch] = useState('');
    const inputField = useRef();
-   const refInputSeach = useRef(null);
+   const refInputSearch = useRef(null);
    const [searchParams, setSearchParams] = useSearchParams();
    const fechCategory = async () => {
       try {
          const response = await Category.getAll();
          setCategory(response.data.result);
+         setLoading(false);
       } catch (error) {
          console.log('error', error);
+         setLoading(false);
       }
    };
    useEffect(() => {
@@ -37,7 +39,6 @@ function AddCategory(props) {
          token: window.localStorage.getItem('token'),
       });
       fechCategory();
-      setLoading(false);
    }, []);
 
    const handleAdd = async () => {
@@ -47,7 +48,6 @@ function AddCategory(props) {
          setLoading(true);
          await Category.add(data, token);
          fechCategory();
-         setLoading(false);
          setField(false);
       } catch (error) {
          console.log('error', error);
@@ -56,11 +56,11 @@ function AddCategory(props) {
    };
    const handleSearch = (e) => {
       setInputSearch(e.target.value);
-      if (refInputSeach.current) {
-         clearTimeout(refInputSeach.current);
+      if (refInputSearch.current) {
+         clearTimeout(refInputSearch.current);
       }
-
-      refInputSeach.current = setTimeout(async () => {
+      refInputSearch.current = setTimeout(async () => {
+         setLoading(true);
          searchParams.set('q', e.target.value);
          setSearchParams(searchParams);
          if (e.target.value === '') {
@@ -70,14 +70,16 @@ function AddCategory(props) {
          try {
             const response = await Category.search({ name: e.target.value });
             setCategory(response.data.result);
+            setLoading(false);
          } catch (error) {
             console.log('error', error);
+            setLoading(false);
          }
-      }, 500);
+      }, 400);
    };
 
    return (
-      <div className={cln('wrapper')}>
+      <>
          {loading && (
             <div className={cln('loading')}>
                <Spinner animation="grow" variant="info" />
@@ -93,65 +95,67 @@ function AddCategory(props) {
                Update successful
             </Alert>
          )}
-         <InputGroup className={`mb-3 ${cln('input-search')}`}>
-            <Form.Control value={inputSearch} onChange={handleSearch} />
-         </InputGroup>
-         <div className={cln('container')}>
-            <div className={cln('table_category')}>
-               <Table striped bordered hover size="sm">
-                  <thead>
-                     <tr>
-                        <th>ID</th>
-                        <th>Category</th>
-                     </tr>
-                  </thead>
-                  <tbody>
-                     {category.length > 0 ? (
-                        category?.map((value, index) => {
-                           return (
-                              <CategoryField
-                                 key={index}
-                                 value={value}
-                                 token={token}
-                                 setLoading={setLoading}
-                                 setShowError={setShowError}
-                                 setShowSucc={setShowSucc}
-                              />
-                           );
-                        })
-                     ) : (
-                        <tr style={{ textAlign: 'center' }}>
-                           <td colSpan={2}>Not found !!</td>
+         <div className={cln('wrapper')}>
+            <InputGroup className={`mb-3 ${cln('input-search')}`}>
+               <Form.Control value={inputSearch} onChange={handleSearch} />
+            </InputGroup>
+            <div className={cln('container')}>
+               <div className={cln('table_category')}>
+                  <Table striped bordered hover size="sm">
+                     <thead>
+                        <tr>
+                           <th>ID</th>
+                           <th>Category</th>
                         </tr>
-                     )}
-                     {field && (
-                        <tr className={cln('new-field')}>
-                           <td>{category.length + 1}</td>
-                           <td className={cln('input-field')}>
-                              <input ref={inputField} type="text" />
-                              <Button variant="primary" onClick={handleAdd}>
-                                 Add
-                              </Button>
-                              <Button
-                                 variant="danger"
-                                 onClick={(e) => {
-                                    setField(false);
-                                 }}>
-                                 Cancel
-                              </Button>
+                     </thead>
+                     <tbody>
+                        {category.length > 0 ? (
+                           category?.map((value, index) => {
+                              return (
+                                 <CategoryField
+                                    key={index}
+                                    value={value}
+                                    token={token}
+                                    setLoading={setLoading}
+                                    setShowError={setShowError}
+                                    setShowSucc={setShowSucc}
+                                 />
+                              );
+                           })
+                        ) : (
+                           <tr style={{ textAlign: 'center' }}>
+                              <td colSpan={2}>Not found !!</td>
+                           </tr>
+                        )}
+                        {field && (
+                           <tr className={cln('new-field')}>
+                              <td>{category.length + 1}</td>
+                              <td className={cln('input-field')}>
+                                 <input ref={inputField} type="text" />
+                                 <Button variant="primary" onClick={handleAdd}>
+                                    Add
+                                 </Button>
+                                 <Button
+                                    variant="danger"
+                                    onClick={(e) => {
+                                       setField(false);
+                                    }}>
+                                    Cancel
+                                 </Button>
+                              </td>
+                           </tr>
+                        )}
+                        <tr className={cln('add-category')}>
+                           <td onClick={() => setField(true)}>
+                              <AddOutlinedIcon />
                            </td>
                         </tr>
-                     )}
-                     <tr className={cln('add-category')}>
-                        <td onClick={() => setField(true)}>
-                           <AddOutlinedIcon />
-                        </td>
-                     </tr>
-                  </tbody>
-               </Table>
+                     </tbody>
+                  </Table>
+               </div>
             </div>
          </div>
-      </div>
+      </>
    );
 }
 
