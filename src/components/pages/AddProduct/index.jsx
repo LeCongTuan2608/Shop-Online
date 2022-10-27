@@ -5,6 +5,7 @@ import classNames from 'classnames/bind';
 import { Formik } from 'formik';
 import { useEffect, useRef, useState } from 'react';
 import { Button, Col, Dropdown, DropdownButton, Form, Row, Spinner } from 'react-bootstrap';
+import { useMediaQuery } from 'react-responsive';
 import * as yup from 'yup';
 import styles from './AddProduct.module.scss';
 const cln = classNames.bind(styles);
@@ -34,15 +35,15 @@ const schema = yup.object().shape({
 
 AddProduct.propTypes = {};
 function AddProduct(props) {
-   const [images, setImages] = useState('');
-   const [listImage, setListImgae] = useState([]);
-   const [category, setCategory] = useState([]);
-   const [title, setTitle] = useState({ name: 'Choose', id: null });
    const [showError, setShowError] = useState({ categories: false, image: false });
    const [success, setSuccess] = useState({ status: false, message: '', color: 'red' });
+   const [title, setTitle] = useState({ name: 'Choose', id: null });
+   const [listImage, setListImgae] = useState([]);
    const [loading, setLoading] = useState(false);
+   const [category, setCategory] = useState([]);
+   const [images, setImages] = useState('');
    const inputFile = useRef(null);
-
+   const isScreen750 = useMediaQuery({ query: '(max-width: 751px)' });
    useEffect(() => {
       const fetchCategory = async () => {
          try {
@@ -134,49 +135,33 @@ function AddProduct(props) {
             <Formik validationSchema={schema} onSubmit={handleSubmitForm} initialValues={form}>
                {({ handleSubmit, handleChange, handleBlur, values, touched, isValid, errors }) => (
                   <Form noValidate onSubmit={handleSubmit}>
-                     <div
-                        className={cln('upload_file')}
-                        style={{
-                           top:
-                              Object.keys(errors).length > 0
-                                 ? Object.keys(errors).length <= 3
-                                    ? '64%'
-                                    : '70%'
-                                 : undefined,
-                        }}>
+                     <div className={cln('upload_file')}>
                         <input
                            type="file"
                            id="uploadFile"
                            multiple="multiple"
-                           style={{ display: 'none' }}
+                           style={{ display: isScreen750 ? 'block' : 'none' }}
                            onChange={handleUpload}
                            ref={inputFile}
                         />
-                        <div
-                           className={cln('container_upload')}
-                           onClick={handleTriggerClick}
-                           style={{
-                              maxHeight:
-                                 Object.keys(errors).length > 0
-                                    ? Object.keys(errors).length <= 3
-                                       ? '200px'
-                                       : '160px'
-                                    : undefined,
-                           }}>
-                           {images ? (
-                              <img src={images?.preview} alt="" />
-                           ) : (
-                              <div className={cln('container_content')}>
-                                 <CloudUploadOutlinedIcon />
-                                 <div>
-                                    <span>Choose image upload</span>
+                        {!isScreen750 && (
+                           <div className={cln('container_upload')} onClick={handleTriggerClick}>
+                              {images ? (
+                                 <img src={images?.preview} alt="" />
+                              ) : (
+                                 <div className={cln('container_content')}>
+                                    <CloudUploadOutlinedIcon />
+                                    <div>
+                                       <span>Choose image upload</span>
+                                    </div>
+                                    <div>
+                                       <span>PNG or JPG</span>
+                                    </div>
                                  </div>
-                                 <div>
-                                    <span>PNG or JPG</span>
-                                 </div>
-                              </div>
-                           )}
-                        </div>
+                              )}
+                           </div>
+                        )}
+
                         {showError.image && (
                            <div
                               style={{
@@ -252,7 +237,10 @@ function AddProduct(props) {
 
                            <Form.Group as={Col} md="3" controlId="validationFormik05">
                               <Form.Label>Categories</Form.Label>
-                              <DropdownButton id="dropdown-basic-button" title={title.name}>
+                              <DropdownButton
+                                 id="dropdown-basic-button"
+                                 variant="outline-primary"
+                                 title={title.name}>
                                  {category.length !== 0 ? (
                                     category.map((value, index) => {
                                        return (

@@ -59,7 +59,7 @@ function ProductPage(props) {
                <Spinner animation="grow" variant="info" />
             </div>
          )}
-         <div className={cln('wrapper')}>
+         <div className={cln('wrapper')} style={{ height: data?.length > 0 ? 'auto' : '100%' }}>
             {data?.length > 0 ? (
                <div className={cln('product')}>
                   {data.map((value, index) => {
@@ -77,7 +77,7 @@ function ProductPage(props) {
             ) : data?.length === 0 && !loading ? (
                <div className={cln('error')}>
                   <div className={cln('error-title')}>
-                     <span>No product found!!</span>
+                     <span>Not found!!</span>
                   </div>
                </div>
             ) : (
@@ -87,7 +87,7 @@ function ProductPage(props) {
                         <img src={img_error} alt="" />
                      </div>
                      <div className={cln('error-title')}>
-                        <span>Website not working, please reload!</span>
+                        <span>Please check the network connection!!</span>
                      </div>
                   </div>
                )

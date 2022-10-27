@@ -105,7 +105,6 @@ function Dashboard(props) {
                            key={index}
                            className={cln('nav-link')}
                            id={pathname === `${route.path}` ? cln('active') : undefined}
-                           href={`#${route.path}`}
                            as={Link}
                            to={route.path}>
                            {route.Icon ? <route.Icon /> : undefined}
@@ -120,7 +119,6 @@ function Dashboard(props) {
                               key={index}
                               className={cln('nav-link')}
                               id={pathname === `${route.path}` ? cln('active') : undefined}
-                              href={`#${route.path}`}
                               as={Link}
                               to={route.path}>
                               {route.Icon ? <route.Icon /> : undefined}
@@ -138,7 +136,6 @@ function Dashboard(props) {
                                  key={index}
                                  className={cln('nav-link')}
                                  id={pathname === `${route.path}` ? cln('active') : undefined}
-                                 href={`#${route.path}`}
                                  as={Link}
                                  to={route.path}>
                                  {route.Icon ? <route.Icon /> : undefined}
