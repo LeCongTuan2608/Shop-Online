@@ -1,6 +1,7 @@
 .wrapper {
-   height: 100%;
+   height: auto;
    color: var(--color-text-black);
+   padding-bottom: 20px;
 }
 .header {
    padding: 10px 0;
@@ -28,4 +29,9 @@
    top: 5%;
    z-index: 4;
    animation: show 0.5s ease-in-out forwards;
+}
+.container-mobile {
+   display: flex;
+   flex-direction: column;
+   gap: 10px;
 }

@@ -6,6 +6,8 @@ import { useEffect, useRef, useState } from 'react';
 import Bill from 'API/Bill';
 import Field from './Field';
 import { useSearchParams } from 'react-router-dom';
+import { useMediaQuery } from 'react-responsive';
+import BillScreenMobile from './BillScreenMobile';
 
 const cln = classNames.bind(styles);
 BillPage.propTypes = {};
@@ -18,6 +20,7 @@ function BillPage(props) {
    const [loading, setLoading] = useState(true);
    const [showError, setShowError] = useState(false);
    const [showSucc, setShowSucc] = useState(false);
+   const isScreen500 = useMediaQuery({ query: '(max-width: 501px)' });
 
    useEffect(() => {
       const q = searchParams.get('q');
@@ -27,6 +30,7 @@ function BillPage(props) {
       };
       const fetchAllBill = async () => {
          let response;
+         setLoading(true);
          try {
             if (q === 'delivering') {
                response = await Bill.getProcess(token);
@@ -91,21 +95,46 @@ function BillPage(props) {
                   </Dropdown.Item>
                </DropdownButton>
             </div>
-            <Table striped bordered hover>
-               <thead>
-                  <tr>
-                     <th>ID</th>
-                     <th>Purchaser Name</th>
-                     <th>Email</th>
-                     <th>Purchase Date</th>
-                     <th>Price</th>
-                     <th>Status</th>
-                  </tr>
-               </thead>
-               <tbody>
+            {!isScreen500 ? (
+               <Table striped bordered hover>
+                  <thead>
+                     <tr>
+                        <th>ID</th>
+                        <th>Purchaser Name</th>
+                        <th>Email</th>
+                        <th>Purchase Date</th>
+                        <th>Price</th>
+                        <th>Status</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     {bills?.map((value, index) => {
+                        return (
+                           <Field
+                              key={index}
+                              bill={value}
+                              update={update}
+                              setUpdate={setUpdate}
+                              setLoading={setLoading}
+                              setShowError={setShowError}
+                              setShowSucc={setShowSucc}
+                           />
+                        );
+                     })}
+                     {bills?.length === 0 && (
+                        <tr style={{ textAlign: 'center' }}>
+                           <td colSpan={6}>
+                              No orders {title === 'delivering' ? 'delivering' : 'delivered'}!
+                           </td>
+                        </tr>
+                     )}
+                  </tbody>
+               </Table>
+            ) : (
+               <div className={cln('container-mobile')}>
                   {bills?.map((value, index) => {
                      return (
-                        <Field
+                        <BillScreenMobile
                            key={index}
                            bill={value}
                            update={update}
@@ -116,15 +145,8 @@ function BillPage(props) {
                         />
                      );
                   })}
-                  {bills?.length === 0 && (
-                     <tr style={{ textAlign: 'center' }}>
-                        <td colSpan={6}>
-                           No orders {title === 'delivering' ? 'delivering' : 'delivered'}!
-                        </td>
-                     </tr>
-                  )}
-               </tbody>
-            </Table>
+               </div>
+            )}
          </div>
       </>
    );

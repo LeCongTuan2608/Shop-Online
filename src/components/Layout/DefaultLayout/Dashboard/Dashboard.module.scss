@@ -12,6 +12,7 @@
    flex-direction: column;
    justify-content: space-between !important;
    gap: 20px;
+
    & .user {
       width: 100%;
       padding: 5px 12px;
@@ -46,6 +47,7 @@
       }
    }
    & .container {
+      flex: 1;
       & > div {
          display: flex;
          flex-direction: column;
@@ -130,7 +132,8 @@
       transform: translateX(0%);
    }
 }
-@media screen and (max-width: 415px) {
+
+@media screen and (max-width: 501px) {
    .wrapper {
       display: none;
       position: absolute;

@@ -11,3 +11,11 @@
    align-items: center;
    z-index: 3;
 }
+.wrapper {
+   padding: 20px 5px;
+}
+.container {
+   display: flex;
+   flex-direction: column;
+   gap: 10px;
+}

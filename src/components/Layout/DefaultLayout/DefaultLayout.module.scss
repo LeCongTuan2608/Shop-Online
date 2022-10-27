@@ -38,7 +38,14 @@
 .header {
    display: none;
 }
-@media screen and (max-width: 415px) {
+@media screen and(max-width:750px) {
+   .content {
+      &::-webkit-scrollbar {
+         display: none;
+      }
+   }
+}
+@media screen and (max-width: 501px) {
    .wrapper {
       display: block;
    }
@@ -55,15 +62,16 @@
       height: 50px;
       padding: 0 10px;
       display: flex;
-      justify-content: flex-start;
       align-items: center;
-      gap: 120px;
       & .brand {
          color: rgb(61, 222, 77);
          transition: ease-in-out 0.2s;
          font-weight: 600;
          font-size: 25px;
-         cursor: default;
+         cursor: pointer;
+         flex: 1;
+         text-align: center;
+         margin-right: 50px;
       }
    }
    .container {
@@ -71,10 +79,6 @@
    }
    .content-wrapper {
       padding: 0;
-   }
-   .content {
-      &::-webkit-scrollbar {
-         display: none;
-      }
+      padding: 0 5px;
    }
 }

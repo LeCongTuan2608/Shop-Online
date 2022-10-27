@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import classNames from 'classnames/bind';
 import styles from './Product.module.scss';
 import PropTypes from 'prop-types';
+import { useMediaQuery } from 'react-responsive';
 
 const cln = classNames.bind(styles);
 Product.propTypes = {
@@ -18,6 +19,8 @@ const formatCash = (str) => {
 function Product(props) {
    const { value, selected, setSelected, isChecked } = props;
    const inputCheck = useRef();
+   const isScreen500 = useMediaQuery({ query: '(max-width: 501px)' });
+
    useEffect(() => {
       inputCheck.current.checked = isChecked;
    }, [isChecked]);
@@ -43,14 +46,29 @@ function Product(props) {
             <div className={cln('container-img')}>
                <img src={value?.images[0]?.url} alt="" />
             </div>
-            <div className={cln('container-content')}>
-               <p className={cln('content-title')}>{value?.productName}</p>
-               <p className={cln('content-des')}>{value?.productDes}</p>
-            </div>
-            <div className={cln('container-price')}>
-               <span>Amount: {value?.productAmount}</span>
-               <span>{formatCash(value?.productPrice)}vnđ</span>
-            </div>
+            {!isScreen500 ? (
+               <>
+                  <div className={cln('container-content')}>
+                     <p className={cln('content-title')}>{value?.productName}</p>
+                     {!isScreen500 && <p className={cln('content-des')}>{value?.productDes}</p>}
+                  </div>
+                  <div className={cln('container-price')}>
+                     <span>Amount: {value?.productAmount}</span>
+                     <span>{formatCash(value?.productPrice)}vnđ</span>
+                  </div>
+               </>
+            ) : (
+               <div style={{ flex: '1', display: 'flex', gap: '5px', flexDirection: 'column' }}>
+                  <div className={cln('container-content')}>
+                     <p className={cln('content-title')}>{value?.productName}</p>
+                     {!isScreen500 && <p className={cln('content-des')}>{value?.productDes}</p>}
+                  </div>
+                  <div className={cln('container-price')}>
+                     <span>Amount: {value?.productAmount}</span>
+                     <span>{formatCash(value?.productPrice)}vnđ</span>
+                  </div>
+               </div>
+            )}
          </div>
       </div>
    );

@@ -25,7 +25,7 @@ function Dashboard(props) {
    const [login, setLogin] = useState(user);
    const [zoomOut, setZoomOut] = useState(false);
    const { pathname } = useLocation();
-   const isMediaMobile = useMediaQuery({ query: '(max-width: 415px)' });
+   const isMediaMobile = useMediaQuery({ query: '(max-width: 500px)' });
    const isMediaScreen750 = useMediaQuery({ query: '(max-width: 750px)' });
    const handleClick = () => {
       if (isMediaMobile) {
@@ -41,10 +41,11 @@ function Dashboard(props) {
       } else {
          setZoomOut(false);
       }
-      if (!isMediaMobile) {
-         setDashboard(false);
-      } else {
+      if (isMediaMobile) {
+         setDashboard(true);
          setZoomOut(false);
+      } else {
+         setDashboard(false);
       }
    }, [isMediaMobile, isMediaScreen750]);
    return (
@@ -60,7 +61,7 @@ function Dashboard(props) {
                <Button
                   variant="outline-warning"
                   onClick={handleClick}
-                  style={zoomOut ? { transform: 'rotate(180deg)' } : undefined}>
+                  style={zoomOut ? { transform: 'rotate(180deg)', flex: '1' } : undefined}>
                   <ArrowCircleLeftOutlinedIcon />
                </Button>
                {zoomOut ? undefined : <span className={cln('brand')}>SoPa</span>}

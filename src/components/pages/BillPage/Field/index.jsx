@@ -19,6 +19,7 @@ const formatCash = (str) => {
 };
 function Field(props) {
    const { bill, update, setUpdate, setLoading, setShowError, setShowSucc } = props;
+
    const handleUpdate = async (e) => {
       setLoading(true);
       const token = {
@@ -46,7 +47,7 @@ function Field(props) {
          <td>{bill?.billId}</td>
          <td>{bill?.purchaserName}</td>
          <td>{bill?.purchaserEmail}</td>
-         <td>{bill?.purchaseDate}</td>
+         <td>{bill?.purchaseDate.slice(0, 10)}</td>
          <td>{formatCash(bill?.price)}đ</td>
          <td className={cln('status')}>
             {bill?.status === 'SUCC' ? (

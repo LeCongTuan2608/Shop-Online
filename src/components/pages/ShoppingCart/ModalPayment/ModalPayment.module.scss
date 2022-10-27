@@ -1,0 +1,22 @@
+.contained-body {
+   display: flex;
+   flex-direction: column;
+   gap: 5px;
+}
+.row-item {
+   border: 1px dashed black;
+}
+.col-name-prod {
+   border-right: 1px dashed black;
+   max-height: 60px;
+   -webkit-line-clamp: 2;
+   -webkit-box-orient: vertical;
+   overflow: hidden;
+   display: -webkit-box;
+}
+.col-price-prod {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+}

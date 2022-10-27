@@ -29,7 +29,7 @@ function Login(props) {
    const [modalShow, setModalShow] = useState(false);
    const [loading, setLoading] = useState(false);
    const [errorss, setErrorss] = useState(false);
-   const userr = useSelector((props) => props.user);
+   const [text, setText] = useState('');
 
    const handleShow = () => {
       setModalShow(true);
@@ -47,14 +47,18 @@ function Login(props) {
    const handleSubmitForm = async (value) => {
       try {
          setLoading(true);
-         await dispatch(userLogin(value)).unwrap();
+         const fetchLogin = await dispatch(userLogin(value)).unwrap();
          setLogin({
             token: window.localStorage.getItem('token'),
             infoUser: JSON.parse(window.localStorage.getItem('infoUser')),
          });
          if (window.localStorage.getItem('token')) {
             setModalShow(false);
+         } else if (fetchLogin === 'LOGIN FAIL!') {
+            setErrorss(true);
+            setText('wrong email or password!!');
          } else {
+            setText('');
             setErrorss(true);
          }
          setLoading(false);
@@ -132,10 +136,16 @@ function Login(props) {
                                  </Form.Control.Feedback>
                               </Form.Group>
                               <Button type="submit">Login</Button>
-                              {errorss && (
-                                 <span style={{ margin: '0 auto', color: 'red' }}>
-                                    Có lỗi xảy ra khi đăng nhập!
+                              {errorss && text ? (
+                                 <span style={{ textAlign: 'center', color: 'red' }}>
+                                    Wrong email or password!
                                  </span>
+                              ) : (
+                                 errorss && (
+                                    <span style={{ textAlign: 'center', color: 'red' }}>
+                                       An error occurred while logging in!
+                                    </span>
+                                 )
                               )}
                               <SignUp />
                               <Row className={cln('other')}>

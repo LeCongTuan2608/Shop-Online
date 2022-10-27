@@ -1,4 +1,17 @@
 tr th,
 td {
    text-align: center;
+   vertical-align: middle;
+}
+tbody tr {
+   max-height: 85px;
+   td {
+      span {
+         -webkit-line-clamp: 3;
+         -webkit-box-orient: vertical;
+         overflow: hidden;
+         display: -webkit-box;
+         height: 100%;
+      }
+   }
 }

@@ -14,21 +14,22 @@ const formatCash = (str) => {
    return str.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 };
 function ShoppingCart(props) {
-   // ẩn cái state này đi là nó nhảy xuống state dưới à
    const [productCart, setProductCart] = useState(
       JSON.parse(window.localStorage.getItem('cartProduct'))?.reverse(),
    );
-   const [loading, setLoading] = useState(true);
-   const [modalShow, setModalShow] = useState(false);
-   const [key, setKey] = useState('cart');
-   const inputSelectAll = useRef();
-   const [selected, setSelected] = useState([]);
-   const [isChecked, setIsChecked] = useState();
-   const [showError, setShowError] = useState(false);
-   const [searchParams, setSearchParams] = useSearchParams();
-   const [purchaseOrder, setPurchaseOrder] = useState([]);
    const [loadPurchase, setLoadPurchase] = useState(false);
+   const [purchaseOrder, setPurchaseOrder] = useState([]);
+   const [modalShow, setModalShow] = useState(false);
+   const [showError, setShowError] = useState(false);
+   const [selected, setSelected] = useState([]);
+   const [loading, setLoading] = useState(true);
+   const [isChecked, setIsChecked] = useState();
+   const [key, setKey] = useState('cart');
    const [token, setToken] = useState();
+
+   const [searchParams, setSearchParams] = useSearchParams();
+   const inputSelectAll = useRef();
+
    useEffect(() => {
       const getEmail = JSON.parse(window.localStorage.getItem('infoUser'));
       const getToken = {
@@ -40,6 +41,9 @@ function ShoppingCart(props) {
          try {
             const response = await Bill.getBillUser(getEmail.email, getToken);
             setPurchaseOrder(response.data.result);
+            if (response.data.result.length === 0) {
+               setLoading(false);
+            }
          } catch (error) {
             console.log('error', error);
             setLoading(false);
@@ -108,6 +112,7 @@ function ShoppingCart(props) {
             className={cln('wrapper')}
             style={{ height: productCart?.length > 0 ? 'auto' : '100%' }}>
             <Tabs
+               className={`mb-3 ${cln('tabs-container')}`}
                id="controlled-tab-example"
                activeKey={searchParams.get('q') ? searchParams.get('q') : 'cart'}
                onSelect={(k) => {
@@ -118,8 +123,7 @@ function ShoppingCart(props) {
                      searchParams.set('q', k);
                   }
                   setSearchParams(searchParams);
-               }}
-               className="mb-3">
+               }}>
                <Tab eventKey="cart" title="Cart">
                   <div
                      className={cln('container')}

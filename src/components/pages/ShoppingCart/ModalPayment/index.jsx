@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Col, Container, Modal, Row } from 'react-bootstrap';
 import Bill from 'API/Bill';
-
+import { useMediaQuery } from 'react-responsive';
+import styles from './ModalPayment.module.scss';
+import classNames from 'classnames/bind';
+const cln = classNames.bind(styles);
 ModalPayment.propTypes = {};
 const formatCash = (str) => {
    return str.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
@@ -11,6 +14,7 @@ function ModalPayment(props) {
    const { selected, handleDelete, show, onHide, loadPurchase, setLoadPurchase, totalPrice } =
       props;
    const [token, setToken] = useState();
+   const isScreen768 = useMediaQuery({ query: '(max-width: 768px)' });
    useEffect(() => {
       const getToken = {
          token: window.localStorage.getItem('token'),
@@ -35,6 +39,7 @@ function ModalPayment(props) {
          console.log('error', error);
       }
    };
+
    return (
       <div>
          <Modal show={show} onHide={onHide} aria-labelledby="contained-modal-title-vcenter">
@@ -42,18 +47,14 @@ function ModalPayment(props) {
                <Modal.Title id="contained-modal-title-vcenter">Using Grid in Modal</Modal.Title>
             </Modal.Header>
             <Modal.Body className="show-grid">
-               <Container style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+               <Container className={cln('contained-body')}>
                   {selected.map((value, index) => {
                      return (
-                        <Row
-                           key={index}
-                           style={{
-                              border: '1px solid black',
-                           }}>
-                           <Col xs={12} md={8} style={{ borderRight: '1px solid black' }}>
+                        <Row key={index} className={cln('row-item')}>
+                           <Col xs={12} md={7} className={cln('col-name-prod')}>
                               {value.productName}
                            </Col>
-                           <Col xs={6} md={4} style={{ display: 'flex', flexDirection: 'column' }}>
+                           <Col xs={6} md={5} className={cln('col-price-prod')}>
                               <span>
                                  <b>Amount:</b> {value.productAmount}
                               </span>
@@ -65,10 +66,10 @@ function ModalPayment(props) {
                      );
                   })}
                   <Row>
-                     <Col xs={12} md={8}>
+                     <Col xs={12} md={7} style={{ width: isScreen768 && '50%' }}>
                         Total:
                      </Col>
-                     <Col xs={6} md={4}>
+                     <Col xs={6} md={5}>
                         {formatCash(totalPrice)}
                      </Col>
                   </Row>

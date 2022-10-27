@@ -1,22 +1,12 @@
+import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined';
 import Category from 'API/Category';
 import Product_API from 'API/Product_API';
 import classNames from 'classnames/bind';
 import { Formik } from 'formik';
 import { useEffect, useRef, useState } from 'react';
-import {
-   Button,
-   Carousel,
-   Col,
-   Dropdown,
-   DropdownButton,
-   Form,
-   Row,
-   Spinner,
-} from 'react-bootstrap';
+import { Button, Col, Dropdown, DropdownButton, Form, Row, Spinner } from 'react-bootstrap';
 import * as yup from 'yup';
 import styles from './AddProduct.module.scss';
-import PropTypes from 'prop-types';
-import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined';
 const cln = classNames.bind(styles);
 
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/gif', 'image/png'];
@@ -54,7 +44,7 @@ function AddProduct(props) {
    const inputFile = useRef(null);
 
    useEffect(() => {
-      const fechCategory = async () => {
+      const fetchCategory = async () => {
          try {
             const response = await Category.getAll();
             setCategory(response.data.result);
@@ -62,7 +52,7 @@ function AddProduct(props) {
             console.log('error', error);
          }
       };
-      fechCategory();
+      fetchCategory();
    }, []);
    useEffect(() => {
       return () => {
@@ -77,15 +67,13 @@ function AddProduct(props) {
       setShowError(false);
    };
    //kich hoat su kien upload file
-   const handleTrickgerClick = () => {
+   const handleTriggerClick = () => {
       inputFile.current.click();
    };
    // lấy thông tin của file
    const handleUpload = (e) => {
       setListImgae([...e.target.files]);
       const file = e.target.files[0];
-      console.log('file', file);
-
       if (file) {
          file.preview = URL.createObjectURL(file);
          setImages(file);
@@ -111,7 +99,6 @@ function AddProduct(props) {
       data.append('price', value.price);
       data.append('des', value.description);
       data.append('amount', value.amount);
-      console.log(listImage);
       listImage?.map((value) => {
          return data.append('imageFiles', value);
       });
@@ -120,10 +107,8 @@ function AddProduct(props) {
       data.append('categoryId', title.id);
       if (!title.id) {
          setShowError({ ...showError, categories: true });
-         console.log(showError);
       } else if (!images) {
          setShowError({ ...showError, image: true });
-         console.log(showError);
       } else {
          try {
             setLoading(true);
@@ -149,7 +134,16 @@ function AddProduct(props) {
             <Formik validationSchema={schema} onSubmit={handleSubmitForm} initialValues={form}>
                {({ handleSubmit, handleChange, handleBlur, values, touched, isValid, errors }) => (
                   <Form noValidate onSubmit={handleSubmit}>
-                     <div className={cln('upload_file')}>
+                     <div
+                        className={cln('upload_file')}
+                        style={{
+                           top:
+                              Object.keys(errors).length > 0
+                                 ? Object.keys(errors).length <= 3
+                                    ? '64%'
+                                    : '70%'
+                                 : undefined,
+                        }}>
                         <input
                            type="file"
                            id="uploadFile"
@@ -158,7 +152,17 @@ function AddProduct(props) {
                            onChange={handleUpload}
                            ref={inputFile}
                         />
-                        <div className={cln('container_upload')} onClick={handleTrickgerClick}>
+                        <div
+                           className={cln('container_upload')}
+                           onClick={handleTriggerClick}
+                           style={{
+                              maxHeight:
+                                 Object.keys(errors).length > 0
+                                    ? Object.keys(errors).length <= 3
+                                       ? '200px'
+                                       : '160px'
+                                    : undefined,
+                           }}>
                            {images ? (
                               <img src={images?.preview} alt="" />
                            ) : (

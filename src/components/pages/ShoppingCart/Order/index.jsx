@@ -40,8 +40,7 @@ function Order(props) {
             <tr>
                <th style={{ width: '500px' }}>Name product</th>
                <th style={{ width: '225px' }}>Purchase Date</th>
-               <th style={{ width: '200px' }}>Quantity purchased</th>
-               <th style={{ width: '65px' }}>ID</th>
+               <th style={{ width: '200px' }}>Amount</th>
                <th style={{ width: '142px' }}>Price</th>
                <th style={{ textAlign: 'center' }}>Status</th>
             </tr>
@@ -50,19 +49,34 @@ function Order(props) {
             {infoBill?.productResponse?.map((prod, index) => {
                return (
                   <tr key={index}>
-                     <td>{prod.product.productName}</td>
-                     <td>{infoBill.purchaseDate}</td>
-                     <td>{prod.amountPurchased}</td>
-                     <td>{prod.product.productId}</td>
-                     <td>{formatCash(prod?.product?.productPrice)}</td>
-                     <td></td>
+                     <td>
+                        <span>{prod.product.productName}</span>
+                     </td>
+                     <td>
+                        <span>{infoBill.purchaseDate}</span>
+                     </td>
+                     <td>
+                        <span>{prod.amountPurchased}</span>
+                     </td>
+                     <td>
+                        <span>{formatCash(prod?.product?.productPrice)}</span>
+                     </td>
                   </tr>
                );
             })}
-            <tr>
-               <th colSpan={4}>Total</th>
+            <tr
+               style={{
+                  backgroundColor: 'rgb(13 110 253 / 20%)',
+               }}>
+               <th colSpan={3}>Total</th>
                <th>{formatCash(infoBill?.totalPrice)}</th>
-               <td>{infoBill?.status}</td>
+               <td
+                  style={{
+                     color: infoBill?.status === 'SUCC' ? 'green' : 'red',
+                     fontWeight: '500',
+                  }}>
+                  {infoBill?.status}
+               </td>
             </tr>
          </tbody>
       </Table>

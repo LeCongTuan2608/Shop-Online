@@ -28,6 +28,7 @@ function SettingPage(props) {
    const [token, setToken] = useState();
    const [initiaValue, setInitiaValue] = useState();
    const [showError, setShowError] = useState(false);
+   const [succ, setSucc] = useState(false);
 
    const dispatch = useDispatch();
    const inputName = useRef();
@@ -50,10 +51,11 @@ function SettingPage(props) {
    }, []);
 
    let form = { ...JSON.parse(window.localStorage.getItem('infoUser')), password: '' };
-   const handleShowAlert = () => {
-      setShowError(true);
+   const handleShowAlert = (status) => {
+      setShowError(status);
       setTimeout(() => {
          setShowError(false);
+         setSucc(false);
       }, 2500);
    };
    const handleSubmitForm = async (values) => {
@@ -62,7 +64,6 @@ function SettingPage(props) {
          phone: values.phone,
          address: values.address,
       });
-      setEdit(!edit);
       const newValue = {
          email: values.email,
          fullName: values.fullName,
@@ -70,18 +71,24 @@ function SettingPage(props) {
          phone: values.phone,
          address: values.address,
       };
+      setLoading(true);
       try {
          await User.update(newValue, token).then(async () => {
             const infoUser = await User.getByJWT(token);
             await dispatch(userUpdate(infoUser.data)).unwrap();
             localStorage.setItem('infoUser', JSON.stringify(infoUser.data));
-            handleShowAlert();
+            let status = true;
+            handleShowAlert(status);
          });
          setEdit(true);
+         setSucc(true);
       } catch (error) {
          console.log('error', error);
-         handleShowAlert();
+         let status = false;
+         handleShowAlert(status);
+         setSucc(true);
       }
+      setLoading(false);
    };
 
    return (
@@ -91,11 +98,16 @@ function SettingPage(props) {
                <Spinner animation="grow" variant="info" />
             </div>
          )}
-         {showError && (
-            <Alert className={cln('message')} variant={showError ? 'success' : 'danger'}>
-               {showError ? 'Update success!!' : 'Update failed!!'}
+         {showError ? (
+            <Alert className={cln('message')} variant="success">
+               Update success!!
             </Alert>
-         )}
+         ) : succ ? (
+            <Alert className={cln('message')} variant="danger">
+               Update failed!!
+            </Alert>
+         ) : undefined}
+
          <div className={cln('wrapper')}>
             <div className={cln('wrapper-container')}>
                <div className={cln('container-infomation')}>
