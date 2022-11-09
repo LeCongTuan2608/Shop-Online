@@ -47,7 +47,7 @@ function Dashboard(props) {
       } else {
          setDashboard(false);
       }
-   }, [isMediaMobile, isMediaScreen750]);
+   }, [isMediaScreen750, isMediaMobile]);
    return (
       <div
          className={cln('wrapper')}

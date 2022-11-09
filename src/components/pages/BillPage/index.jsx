@@ -108,24 +108,23 @@ function BillPage(props) {
                      </tr>
                   </thead>
                   <tbody>
-                     {bills?.map((value, index) => {
-                        return (
-                           <Field
-                              key={index}
-                              bill={value}
-                              update={update}
-                              setUpdate={setUpdate}
-                              setLoading={setLoading}
-                              setShowError={setShowError}
-                              setShowSucc={setShowSucc}
-                           />
-                        );
-                     })}
-                     {bills?.length === 0 && (
+                     {bills?.length > 0 ? (
+                        bills?.map((value, index) => {
+                           return (
+                              <Field
+                                 key={index}
+                                 bill={value}
+                                 update={update}
+                                 setUpdate={setUpdate}
+                                 setLoading={setLoading}
+                                 setShowError={setShowError}
+                                 setShowSucc={setShowSucc}
+                              />
+                           );
+                        })
+                     ) : (
                         <tr style={{ textAlign: 'center' }}>
-                           <td colSpan={6}>
-                              No orders {title === 'delivering' ? 'delivering' : 'delivered'}!
-                           </td>
+                           <td colSpan={6}>No orders {title === 'All' ? undefined : title}!</td>
                         </tr>
                      )}
                   </tbody>

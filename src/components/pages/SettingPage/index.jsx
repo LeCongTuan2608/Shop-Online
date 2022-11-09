@@ -240,7 +240,7 @@ function SettingPage(props) {
                               onClick={() => {
                                  setEdit(!edit);
                               }}>
-                              edit
+                              Edit
                            </Button>
                         </div>
                      )}

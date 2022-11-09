@@ -3,14 +3,14 @@
    width: 100%;
    display: flex;
    padding: 10px 50px;
-   gap: 20%;
+   justify-content: space-between;
    & .header {
       width: 100%;
+      max-width: 40%;
       & > button {
          display: none;
       }
       & .input-group {
-         max-width: 80%;
          flex: 1;
          box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 4px;
          border-radius: 7px;
@@ -40,6 +40,7 @@
          display: flex;
          align-items: center;
          margin-bottom: 20px;
+         max-width: none;
          & button {
             display: block;
             width: 40px;
@@ -63,6 +64,7 @@
          }
       }
       & .options {
+         text-align: center;
          & > div {
             display: block;
             justify-content: flex-end;

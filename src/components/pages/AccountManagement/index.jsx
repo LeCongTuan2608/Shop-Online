@@ -54,21 +54,22 @@ function AccountManagement(props) {
                      </tr>
                   </thead>
                   <tbody>
-                     {user?.map((value, index) => {
-                        return (
-                           <tr key={index}>
-                              <td>{index + 1}</td>
-                              <td>{value.email}</td>
-                              <td>{value.fullName}</td>
-                              <td>{value.phone}</td>
-                              <td>{value.address}</td>
-                              <td>{value.purchaseInvoice}</td>
-                           </tr>
-                        );
-                     })}
-                     {user?.length === 0 && (
+                     {user?.length > 0 ? (
+                        user?.map((value, index) => {
+                           return (
+                              <tr key={index}>
+                                 <td>{index + 1}</td>
+                                 <td>{value.email}</td>
+                                 <td>{value.fullName}</td>
+                                 <td>{value.phone}</td>
+                                 <td>{value.address}</td>
+                                 <td>{value.purchaseInvoice}</td>
+                              </tr>
+                           );
+                        })
+                     ) : (
                         <tr style={{ textAlign: 'center' }}>
-                           <td colSpan={6}>No user!</td>
+                           <td colSpan={6}>No user!!</td>
                         </tr>
                      )}
                   </tbody>
