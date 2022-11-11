@@ -9,140 +9,76 @@
    position: relative;
    & .title {
       position: absolute;
-      z-index: 1;
       top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      left: 3%;
+      transform: translateY(-50%);
+      max-width: 270px;
+      z-index: 1;
       color: rgb(215, 6, 72);
-      font-family: 'Fredoka One', cursive;
-      font-size: 40px;
-      font-weight: 700;
-      box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+      font-family: 'Shojumaru', cursive;
+      font-size: 35px;
+      animation: ease-in-out;
    }
 }
 .contents {
    position: relative;
    width: 100%;
    height: 100%;
-   & .img_chair {
-      width: 200px;
-      height: 200px;
-      position: absolute;
-      bottom: 5%;
-      left: 10%;
-      transform: rotate(-30deg);
-
-      & img {
-         width: 100%;
-         height: 100%;
-         object-fit: cover;
-         border-radius: 30% 70% 75% 52% / 40% 90% 60% 112%;
-         box-shadow: rgba(255, 255, 255, 0.849) 0px 8px 24px;
-         animation: chair_animate 2.5s ease-in-out infinite alternate;
-      }
-   }
-   & .img_diabay {
-      width: 200px;
-      height: 200px;
-      position: absolute;
-      top: 5%;
-      left: 10%;
-      & img {
-         width: 100%;
-         height: 100%;
-         object-fit: cover;
-         border-radius: 100rem;
-         box-shadow: rgba(240, 46, 170, 0.4) 0px 5px, rgba(240, 46, 170, 0.3) 0px 10px,
-            rgba(240, 46, 170, 0.2) 0px 15px, rgba(240, 46, 170, 0.1) 0px 20px,
-            rgba(240, 46, 170, 0.05) 0px 25px;
-
-         animation: fly 5s ease-in-out infinite alternate;
-      }
-   }
-   & .img_robot {
-      width: 200px;
-      height: 200px;
-      position: absolute;
-      animation-name: show;
-      animation-duration: 1s;
-      animation-timing-function: ease-in-out;
-      top: 50%;
-      transform: translateY(-50%);
-      left: 65%;
-      & img {
-         width: 100%;
-         height: 100%;
-         object-fit: cover;
-         border-radius: 60% 42% 70% 33% / 45% 20% 74% 48%;
-         box-shadow: rgba(255, 255, 255, 0.719) 0px 8px 24px;
-         animation: robot_animate 1.5s ease-in-out infinite alternate;
-      }
-      & span {
-         font-size: 20px;
-         font-weight: 600;
-         width: auto;
-         position: absolute;
-         top: 0;
-         right: -25%;
-         font-style: italic;
-         background-color: rgba(255, 255, 255, 0.801);
-         border-radius: 30px;
-         padding: 10px 20px;
-         &::after {
-            content: '';
-            width: 20px;
-            height: 20px;
-            bottom: -25%;
-            left: 5%;
-            position: absolute;
-            background-color: rgba(255, 255, 255, 0.801);
-            clip-path: polygon(37% 0, 0% 100%, 100% 23%);
-         }
-      }
+}
+.contents-bgr {
+   position: absolute;
+   top: 50%;
+   right: 0%;
+   transform: translateY(-50%);
+   max-width: 900px;
+   max-height: 700px;
+   animation: move 12s infinite alternate ease-in-out;
+   // background-color: rgb(170, 205, 161);
+   // border-radius: 44% 50% 30% 48% / 75% 46% 70% 40%;
+   & img {
+      width: 100%;
+      height: 100%;
    }
 }
-@keyframes robot_animate {
+@keyframes move {
    0% {
-      transform: translateY(5%);
+      background-color: rgb(170, 205, 161);
+      border-radius: 1% 2% 3% 4% / 5% 6% 7% 8%;
    }
    25% {
-      transform: translateX(5%);
+      border-radius: 23% 62% 12% 56% / 12% 76% 34% 75%;
    }
    50% {
-      transform: translateY(0%);
+      background-color: rgb(104, 200, 215);
+      border-radius: 34% 23% 66% 23% / 76% 12% 65% 32%;
    }
    75% {
-      transform: translateX(5%);
+      border-radius: 76% 34% 75% 83% / 52% 76% 12% 65%;
    }
    100% {
-      transform: translateY(5%);
+      background-color: rgb(108, 104, 215);
+      border-radius: 100% 99% 98% 97% / 96% 95% 94% 93%;
    }
 }
-@keyframes chair_animate {
-   0% {
-      transform: rotate(20deg);
-   }
-   100% {
-      transform: rotate(30deg);
-   }
-}
-@keyframes fly {
-   0% {
-      transform: translateX(-150%);
-      opacity: 0.5;
-   }
-   100% {
-      transform: translateX(560%);
-      opacity: 1;
+@media screen and (max-width: 1025px) {
+   .container {
+      & .title {
+         top: 33%;
+      }
    }
 }
-@keyframes show {
-   0% {
-      opacity: 0;
-      transform: translateX(100%);
+@media screen and (max-width: 751px) {
+   .container {
+      & .title {
+         top: 35%;
+      }
    }
-   100% {
-      opacity: 1;
-      transform: translateX(0%);
+   .contents-bgr {
+      top: 60%;
+   }
+}
+@media screen and (max-width: 501px) {
+   .contents-bgr {
+      top: 50%;
    }
 }
