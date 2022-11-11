@@ -16,6 +16,13 @@ const User = {
       };
       return axiosClient.put(url, data, config);
    },
+   changePW(data, token) {
+      const url = `users/change_password`;
+      const config = {
+         headers: { Authorization: `${token.tokenType} ${token.token}` },
+      };
+      return axiosClient.put(url, data, config);
+   },
    getByJWT(token) {
       const url = 'users/get_user';
       const config = {

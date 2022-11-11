@@ -26,9 +26,6 @@ const publicRoutes = [
       component: ProductPage,
       Icon: RedeemOutlinedIcon,
    },
-];
-// Private routes
-const privateRoutes = [
    {
       path: '/shoppingcart',
       title: 'Shopping Cart',
@@ -36,6 +33,9 @@ const privateRoutes = [
       Icon: ShoppingCartOutlinedIcon,
       role: 'USER',
    },
+];
+// Private routes
+const privateRoutes = [
    {
       path: '/setting',
       title: 'Setting',

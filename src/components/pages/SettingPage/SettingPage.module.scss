@@ -7,8 +7,12 @@
    gap: 20px;
    justify-content: space-around;
    align-items: center;
+   & > div {
+      flex: 1;
+      justify-content: center;
+   }
 }
-.container-infomation {
+.container-information {
    padding: 0 10px;
    flex: 1;
    display: flex;
@@ -37,6 +41,24 @@
          & button {
             min-width: 100px;
             margin: 0 auto;
+         }
+      }
+   }
+}
+.password-wrapper {
+   height: 100%;
+}
+.password-container {
+   & form {
+      max-width: 450px;
+      & > div {
+         padding: 0 10px;
+         & > div {
+            width: 100%;
+            & > input {
+               background-image: none !important;
+               border: 0.5px rgb(174, 174, 174) solid;
+            }
          }
       }
    }
@@ -75,6 +97,24 @@
    .container-infomation {
       position: absolute;
       z-index: 2;
+   }
+   .password-container {
+      & form {
+         & button {
+            display: flex;
+            margin: 0 auto;
+         }
+         & > div {
+            padding: 0 10px;
+            & > div {
+               width: 100%;
+               & > input {
+                  background-image: none !important;
+                  border: 0.5px rgb(174, 174, 174) solid;
+               }
+            }
+         }
+      }
    }
    .container-photo {
       position: absolute;

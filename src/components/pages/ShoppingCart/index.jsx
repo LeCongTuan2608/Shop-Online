@@ -2,7 +2,19 @@ import MoodBadOutlinedIcon from '@mui/icons-material/MoodBadOutlined';
 import Bill from 'API/Bill';
 import classNames from 'classnames/bind';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Alert, Button, Container, Nav, Navbar, Spinner, Tab, Table, Tabs } from 'react-bootstrap';
+import {
+   Alert,
+   Button,
+   Container,
+   Modal,
+   Nav,
+   Navbar,
+   Spinner,
+   Tab,
+   Table,
+   Tabs,
+} from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import Product from '../ShoppingCart/Product';
 import ModalPayment from './ModalPayment';
@@ -26,6 +38,8 @@ function ShoppingCart(props) {
    const [isChecked, setIsChecked] = useState();
    const [key, setKey] = useState('cart');
    const [token, setToken] = useState();
+   const getUser = useSelector((state) => state.user.info);
+   const [show, setShow] = useState(false);
 
    const [searchParams, setSearchParams] = useSearchParams();
    const inputSelectAll = useRef();
@@ -39,7 +53,7 @@ function ShoppingCart(props) {
       setToken(getToken);
       const fetchPurchase = async () => {
          try {
-            const response = await Bill.getBillUser(getEmail.email, getToken);
+            const response = await Bill.getBillUser(getEmail?.email, getToken);
             setPurchaseOrder(response.data.result);
             if (response.data.result.length === 0) {
                setLoading(false);
@@ -49,12 +63,21 @@ function ShoppingCart(props) {
             setLoading(false);
          }
       };
-      fetchPurchase();
-   }, [loadPurchase]);
+      if (getEmail?.email) {
+         fetchPurchase();
+      } else {
+         setLoading(false);
+      }
+   }, [loadPurchase, getUser]);
 
    const handleSelectAll = (e) => {
       if (e.target.checked) {
-         setSelected(JSON.parse(window.localStorage.getItem('cartProduct')));
+         const local = JSON.parse(window.localStorage.getItem('cartProduct'));
+         if (local && local.length > 0) {
+            setSelected(local);
+         } else {
+            return;
+         }
          setIsChecked(true);
       } else {
          setIsChecked(false);
@@ -77,14 +100,19 @@ function ShoppingCart(props) {
          }, 2500);
       }
    };
+
    const handlePay = () => {
-      if (selected.length > 0) {
-         setModalShow(true);
+      if (token?.token) {
+         if (selected.length > 0) {
+            setModalShow(true);
+         } else {
+            setShowError(true);
+            setTimeout(() => {
+               setShowError(false);
+            }, 2500);
+         }
       } else {
-         setShowError(true);
-         setTimeout(() => {
-            setShowError(false);
-         }, 2500);
+         setShow(true);
       }
    };
    const totalPrice = useMemo(() => {
@@ -183,34 +211,36 @@ function ShoppingCart(props) {
                      </Container>
                   </Navbar>
                </Tab>
-               <Tab eventKey="purchaseOrder" title="Purchase order">
-                  <div
-                     className={cln('container')}
-                     style={{ height: purchaseOrder?.length > 0 ? 'auto' : '100%' }}>
-                     {purchaseOrder?.length > 0 ? (
-                        <div className={cln('content')}>
-                           {purchaseOrder?.map((value, index) => {
-                              return (
-                                 <Order
-                                    value={value}
-                                    key={index}
-                                    stt={index + 1}
-                                    token={token}
-                                    setLoading={setLoading}
-                                 />
-                              );
-                           })}
-                        </div>
-                     ) : (
-                        !loading && (
-                           <div className={cln('error')}>
-                              <MoodBadOutlinedIcon />
-                              <span>You don't have any orders!!</span>
+               {token?.token && (
+                  <Tab eventKey="purchaseOrder" title="Purchase order">
+                     <div
+                        className={cln('container')}
+                        style={{ height: purchaseOrder?.length > 0 ? 'auto' : '100%' }}>
+                        {purchaseOrder?.length > 0 ? (
+                           <div className={cln('content')}>
+                              {purchaseOrder?.map((value, index) => {
+                                 return (
+                                    <Order
+                                       value={value}
+                                       key={index}
+                                       stt={index + 1}
+                                       token={token}
+                                       setLoading={setLoading}
+                                    />
+                                 );
+                              })}
                            </div>
-                        )
-                     )}
-                  </div>
-               </Tab>
+                        ) : (
+                           !loading && (
+                              <div className={cln('error')}>
+                                 <MoodBadOutlinedIcon />
+                                 <span>You don't have any orders!!</span>
+                              </div>
+                           )
+                        )}
+                     </div>
+                  </Tab>
+               )}
             </Tabs>
          </div>
          <ModalPayment
@@ -222,6 +252,17 @@ function ShoppingCart(props) {
             setLoadPurchase={setLoadPurchase}
             totalPrice={totalPrice}
          />
+         <Modal show={show} onHide={() => setShow(false)} backdrop="static" keyboard={false}>
+            <Modal.Header closeButton>
+               <Modal.Title>Notification</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>You must login before paying!!</Modal.Body>
+            <Modal.Footer>
+               <Button variant="secondary" onClick={() => setShow(false)}>
+                  Close
+               </Button>
+            </Modal.Footer>
+         </Modal>
       </>
    );
 }

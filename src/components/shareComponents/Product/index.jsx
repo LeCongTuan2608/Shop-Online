@@ -55,34 +55,20 @@ function Product(props) {
                   ) : (
                      <Button variant="primary" onClick={handleShow}>
                         <ShoppingCartOutlinedIcon />
-                        <span className={cln('buy')}>Buy</span>
+                        <span className={cln('buy')}>Add to cart</span>
                      </Button>
                   )}
-                  {token ? (
-                     userRole.role === 'ADMIN' ? (
-                        <ModalEditProduct
-                           product={value}
-                           show={show}
-                           handleHide={handleShow}
-                           setDeleteId={setDeleteId}
-                           update={update}
-                           setUpdate={setUpdate}
-                        />
-                     ) : (
-                        <ModalBuyProduct product={value} show={show} handleHide={handleShow} />
-                     )
+                  {userRole?.role === 'ADMIN' ? (
+                     <ModalEditProduct
+                        product={value}
+                        show={show}
+                        handleHide={handleShow}
+                        setDeleteId={setDeleteId}
+                        update={update}
+                        setUpdate={setUpdate}
+                     />
                   ) : (
-                     <Modal show={show} onHide={handleShow}>
-                        <Modal.Header closeButton>
-                           <Modal.Title>Message</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>Heyy, you must login before purchasing the product!</Modal.Body>
-                        <Modal.Footer>
-                           <Button variant="primary" onClick={handleShow}>
-                              Ok
-                           </Button>
-                        </Modal.Footer>
-                     </Modal>
+                     <ModalBuyProduct product={value} show={show} handleHide={handleShow} />
                   )}
                </div>
             </div>

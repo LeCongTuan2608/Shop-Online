@@ -35,6 +35,7 @@ function Dashboard(props) {
          window.localStorage.setItem('zoomOut', zoomOut);
       }
    };
+
    useEffect(() => {
       if (isMediaScreen750) {
          setZoomOut(true);
@@ -100,6 +101,8 @@ function Dashboard(props) {
                }>
                <div>
                   {publicRoutes.map((route, index) => {
+                     if (login?.infoUser?.role === 'ADMIN' && route.title === 'Shopping Cart')
+                        return;
                      return (
                         <Nav.Link
                            key={index}

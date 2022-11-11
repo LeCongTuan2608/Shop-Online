@@ -35,7 +35,6 @@ function Logout(props) {
          infoUser: window.localStorage.removeItem('infoUser'),
       });
       window.localStorage.removeItem('tokenType');
-      window.localStorage.removeItem('cartProduct');
       navigate('/');
    };
 
