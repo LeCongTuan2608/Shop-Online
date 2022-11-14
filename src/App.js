@@ -3,6 +3,7 @@ import { Fragment } from 'react';
 import { Outlet, Route, Routes } from 'react-router-dom';
 import { adminRoutes, privateRoutes, publicRoutes } from './routes';
 import History from './History';
+import HomePage from 'components/pages/HomePage';
 
 function App() {
    return (
@@ -10,6 +11,7 @@ function App() {
          <Routes history={History}>
             <Route element={<DefaultLayout />}>
                {/* route nảy của user nhưng chưa login */}
+               {/* <Route  path="/" element={<HomePage />} /> */}
                {publicRoutes.map((route, index) => {
                   return <Route key={index} path={route.path} element={<route.component />} />;
                })}

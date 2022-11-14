@@ -51,10 +51,10 @@ function BillScreenMobile(props) {
             <div className={cln('container-button')}>
                <span>ID: {bill?.billId}</span>
                {bill?.status === 'SUCC' ? (
-                  <Button variant="outline-success">{bill?.status}</Button>
+                  <Button variant="outline-success">Delivered</Button>
                ) : (
                   <Button variant="outline-danger" onClick={handleUpdate}>
-                     {bill?.status}
+                     Delivering
                   </Button>
                )}
             </div>

@@ -51,10 +51,10 @@ function Field(props) {
          <td>{formatCash(bill?.price)}đ</td>
          <td className={cln('status')}>
             {bill?.status === 'SUCC' ? (
-               <Button variant="outline-success">{bill?.status}</Button>
+               <Button variant="outline-success">Delivered</Button>
             ) : (
                <Button variant="outline-danger" onClick={handleUpdate}>
-                  {bill?.status}
+                  Delivering
                </Button>
             )}
          </td>

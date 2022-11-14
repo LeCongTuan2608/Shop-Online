@@ -75,7 +75,7 @@ function Order(props) {
                      color: infoBill?.status === 'SUCC' ? 'green' : 'red',
                      fontWeight: '500',
                   }}>
-                  {infoBill?.status}
+                  {infoBill?.status === 'SUCC' ? 'Delivered' : 'Delivering'}
                </td>
             </tr>
          </tbody>

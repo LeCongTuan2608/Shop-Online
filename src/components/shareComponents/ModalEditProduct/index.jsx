@@ -239,7 +239,7 @@ function ModalEditProduct(props) {
                               />
                            ) : (
                               <span
-                                 style={{ width: '100%', display: 'block', lineHeight: '44px' }}
+                                 style={{ width: '100%', display: 'block', lineHeight: '1.5rem' }}
                                  onClick={() => {
                                     setActive({ ...active, name: true });
                                  }}>
@@ -252,7 +252,6 @@ function ModalEditProduct(props) {
                            <Form.Control
                               className={cln('input-des')}
                               as="textarea"
-                              style={{ height: '100px', border: 'none' }}
                               defaultValue={detailProduct?.productDes}
                               ref={inputDes}
                               onBlur={handleBlur}

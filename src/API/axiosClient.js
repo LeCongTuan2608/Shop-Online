@@ -1,6 +1,7 @@
 import axios from 'axios';
-// http://118.69.69.160:8080/APISERVER
+// http://103.121.91.49:8899/
 //http://localhost:1200
+//http://103.121.91.49:9999/ShopOnline
 const axiosClient = axios.create({
    baseURL: 'http://localhost:1200/api/',
    headers: {
