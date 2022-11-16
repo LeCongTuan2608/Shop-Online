@@ -20,3 +20,47 @@
    align-items: center;
    justify-content: center;
 }
+.pay-methods {
+   display: flex;
+   width: 100%;
+   justify-content: space-around;
+   margin: 0;
+   & > div {
+      margin: 0;
+   }
+
+   & input:checked {
+      background-color: #13b634;
+      border-color: #13b634;
+   }
+   & svg {
+   }
+}
+.row-item-total {
+   & .col-item-total {
+      text-align: center;
+   }
+}
+.footer {
+   flex-direction: column;
+   align-items: flex-start !important;
+   gap: 5px;
+}
+
+@media screen and(max-width:501px) {
+   .contained-body {
+      gap: 10px;
+   }
+   .row-item {
+      border: 2px dashed #059dc7;
+   }
+   .col-name-prod {
+      border-right: none;
+      border-bottom: 1px dashed black;
+   }
+   .col-price-prod {
+      flex: 1 !important;
+      flex-direction: row;
+      justify-content: space-around;
+   }
+}

@@ -24,13 +24,20 @@ function ProductPage(props) {
    useEffect(() => {
       const id = searchParams.get('id');
       const q = searchParams.get('q');
+      const name = searchParams.get('name');
       setLoading(true);
       const fetchProduct = async () => {
          try {
-            let response = await Product_API.search({
-               category_id: id,
-               product_name: q,
-            });
+            let response;
+            if (name === 'get_product_hot') {
+               response = await Product_API.getHot();
+            } else {
+               response = await Product_API.search({
+                  category_id: id,
+                  product_name: q,
+               });
+            }
+
             setData(response.data.result);
             setLoading(false);
          } catch (error) {

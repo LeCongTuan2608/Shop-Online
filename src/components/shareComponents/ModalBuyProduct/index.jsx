@@ -123,7 +123,7 @@ function ModalBuyProduct(props) {
                               </Form.Label>
                            </Form.Group>
                            <Form.Label className={cln('price')}>
-                              vnđ: {formatCash(product?.productPrice)}
+                              Price: {formatCash(product?.productPrice)}đ
                            </Form.Label>
                            <Button variant="primary" onClick={handleAdd}>
                               Add to cart

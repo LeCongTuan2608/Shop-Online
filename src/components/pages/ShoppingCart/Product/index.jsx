@@ -22,19 +22,23 @@ function Product(props) {
    const isScreen500 = useMediaQuery({ query: '(max-width: 501px)' });
 
    useEffect(() => {
+      inputCheck.current.checked = selected.map((val) => val.productId).includes(value.productId);
+   }, [selected]);
+   useEffect(() => {
       inputCheck.current.checked = isChecked;
    }, [isChecked]);
    const handleCheckbox = (e) => {
       if (e.target.checked) {
-         setSelected([...selected, value]);
+         setSelected((selected) => [...selected, value]);
       } else {
          setSelected(
             selected.filter((val) => {
-               return val.productId != value.productId;
+               return val.productId !== value.productId;
             }),
          );
       }
    };
+
    return (
       <div className={cln('wrapper')}>
          <div className={cln('container')}>
@@ -54,7 +58,7 @@ function Product(props) {
                   </div>
                   <div className={cln('container-price')}>
                      <span>Amount: {value?.productAmount}</span>
-                     <span>{formatCash(value?.productPrice)}vnđ</span>
+                     <span>{formatCash(value?.productPrice)}đ</span>
                   </div>
                </>
             ) : (
@@ -65,7 +69,7 @@ function Product(props) {
                   </div>
                   <div className={cln('container-price')}>
                      <span>Amount: {value?.productAmount}</span>
-                     <span>{formatCash(value?.productPrice)}vnđ</span>
+                     <span>{formatCash(value?.productPrice)}đ</span>
                   </div>
                </div>
             )}

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Col, Container, Modal, Row } from 'react-bootstrap';
+import { Button, Col, Container, Form, Modal, Row } from 'react-bootstrap';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import PaymentIcon from '@mui/icons-material/Payment';
 import Bill from 'API/Bill';
 import { useMediaQuery } from 'react-responsive';
 import styles from './ModalPayment.module.scss';
@@ -11,9 +13,10 @@ const formatCash = (str) => {
    return str.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 };
 function ModalPayment(props) {
-   const { selected, handleDelete, show, onHide, loadPurchase, setLoadPurchase, totalPrice } =
+   const { handleDelete, show, onHide, loadPurchase, setLoadPurchase, totalPrice, selected } =
       props;
    const [token, setToken] = useState();
+
    const isScreen768 = useMediaQuery({ query: '(max-width: 768px)' });
    useEffect(() => {
       const getToken = {
@@ -30,8 +33,7 @@ function ModalPayment(props) {
          };
       });
       try {
-         const response = await Bill.addBill(data, token);
-         console.log('response', response);
+         await Bill.addBill(data, token);
          handleDelete();
          onHide();
          setLoadPurchase(!loadPurchase);
@@ -48,31 +50,57 @@ function ModalPayment(props) {
             </Modal.Header>
             <Modal.Body className="show-grid">
                <Container className={cln('contained-body')}>
-                  {selected.map((value, index) => {
+                  {selected.map((val, index) => {
                      return (
                         <Row key={index} className={cln('row-item')}>
                            <Col xs={12} md={7} className={cln('col-name-prod')}>
-                              {value.productName}
+                              {val.productName}
                            </Col>
                            <Col xs={6} md={5} className={cln('col-price-prod')}>
                               <span>
-                                 <b>Amount:</b> {value.productAmount}
+                                 Amount:<b>{val.productAmount}</b>
                               </span>
                               <span>
-                                 <b>vnđ:</b> {formatCash(value.productPrice)}
+                                 <b>{formatCash(val.productPrice)}đ</b>
                               </span>
                            </Col>
                         </Row>
                      );
                   })}
-                  <Row>
+                  <Row className={cln('row-item-total')}>
                      <Col xs={12} md={7} style={{ width: isScreen768 && '50%' }}>
                         Total:
                      </Col>
-                     <Col xs={6} md={5}>
-                        {formatCash(totalPrice)}
+                     <Col xs={6} md={5} className={cln('col-item-total')}>
+                        <b>{formatCash(totalPrice)}đ</b>
                      </Col>
                   </Row>
+                  <span>Payment methods:</span>
+                  <div className={cln('pay-methods')}>
+                     <Form.Check
+                        inline
+                        label={
+                           <>
+                              Payment in cash <AttachMoneyIcon />
+                           </>
+                        }
+                        name="group1"
+                        type="radio"
+                        id="inline-radio-1"
+                        defaultChecked
+                     />
+                     <Form.Check
+                        inline
+                        label={
+                           <>
+                              Pay by bank card <PaymentIcon />
+                           </>
+                        }
+                        name="group1"
+                        type="radio"
+                        id="inline-radio-2"
+                     />
+                  </div>
                </Container>
             </Modal.Body>
             <Modal.Footer>

@@ -81,7 +81,19 @@
       }
    }
 }
-
+@media screen and(max-width:500px) {
+   .container {
+      & .card-describe {
+         & .card-buy {
+            & button {
+               & .buy {
+                  margin-right: 0;
+               }
+            }
+         }
+      }
+   }
+}
 @media screen and(max-width: 415px) {
    .container {
       gap: 5%;

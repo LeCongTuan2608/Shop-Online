@@ -85,6 +85,9 @@ function BillPage(props) {
                   id="dropdown-basic-button"
                   title={`${title} (${bills?.length})`}>
                   <Dropdown.Item id="delivering" onClick={handleClick}>
+                     Processing
+                  </Dropdown.Item>
+                  <Dropdown.Item id="delivering" onClick={handleClick}>
                      Delivering
                   </Dropdown.Item>
                   <Dropdown.Item id="delivered" onClick={handleClick}>

@@ -68,8 +68,10 @@ function ShoppingCart(props) {
       } else {
          setLoading(false);
       }
+      return () => {
+         setPurchaseOrder([]);
+      };
    }, [loadPurchase, getUser]);
-
    const handleSelectAll = (e) => {
       if (e.target.checked) {
          const local = JSON.parse(window.localStorage.getItem('cartProduct'));
@@ -84,7 +86,7 @@ function ShoppingCart(props) {
          setSelected([]);
       }
    };
-   const handleDelete = (e) => {
+   const handleDelete = () => {
       if (selected.length > 0) {
          const productDelete = productCart.filter(
             (value) => !selected.map((val) => val.productId).includes(value.productId),
@@ -93,6 +95,7 @@ function ShoppingCart(props) {
          setProductCart(productDelete);
          setSelected([]);
          setIsChecked(false);
+         inputSelectAll.current.checked = false;
       } else {
          setShowError(true);
          setTimeout(() => {
@@ -117,7 +120,10 @@ function ShoppingCart(props) {
    };
    const totalPrice = useMemo(() => {
       if (selected.length > 0) {
-         const result = selected?.reduce((sum, product) => {
+         const totalProduct = productCart.filter((value) =>
+            selected.map((val) => val.productId).includes(value.productId),
+         );
+         const result = totalProduct?.reduce((sum, product) => {
             return sum + product?.productPrice * product?.productAmount;
          }, 0);
          return result;
@@ -246,11 +252,11 @@ function ShoppingCart(props) {
          <ModalPayment
             show={modalShow}
             onHide={() => setModalShow(false)}
-            selected={selected}
             handleDelete={handleDelete}
             loadPurchase={loadPurchase}
             setLoadPurchase={setLoadPurchase}
             totalPrice={totalPrice}
+            selected={selected}
          />
          <Modal show={show} onHide={() => setShow(false)} backdrop="static" keyboard={false}>
             <Modal.Header closeButton>

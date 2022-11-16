@@ -44,7 +44,7 @@ function Product(props) {
                   <p className={cln('title')}> {value?.productName}</p>
                </div>
                <div className={cln('card-priced')}>
-                  <span className={cln('priced')}> vnđ: {formatCash(value?.productPrice)}</span>
+                  <span className={cln('priced')}>{formatCash(value?.productPrice)}đ</span>
                </div>
                <div className={cln('card-buy')}>
                   {userRole?.role === 'ADMIN' ? (

@@ -291,7 +291,7 @@ function ModalEditProduct(props) {
                               )}
                            </Form.Group>
                            <div className={cln('price')}>
-                              <span>Vnđ:</span>
+                              <span>Price:</span>
                               {active.price ? (
                                  <input
                                     type="text"
@@ -308,7 +308,7 @@ function ModalEditProduct(props) {
                                     onClick={() => {
                                        setActive({ ...active, price: true });
                                     }}>
-                                    {detailProduct?.productPrice}
+                                    {detailProduct?.productPrice}đ
                                  </span>
                               )}
                            </div>

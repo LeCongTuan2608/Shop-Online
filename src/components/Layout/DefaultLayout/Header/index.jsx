@@ -36,15 +36,19 @@ function Header(props) {
       } else {
          setTitle('Tất cả');
       }
-      const fechCategory = async () => {
+      const fetchCategory = async () => {
          try {
             const response = await Category.getAll();
-            setCategories([{ categoryId: 0, categoryName: 'Tất cả' }, ...response.data.result]);
+            setCategories([
+               { categoryId: 0, categoryName: 'Tất cả' },
+               { categoryId: 100, categoryName: 'Product hot' },
+               ...response.data.result,
+            ]);
          } catch (error) {
             console.log('error', error);
          }
       };
-      fechCategory();
+      fetchCategory();
       setKeyWord(searchParams.get('q') ? searchParams.get('q') : '');
    }, []);
    const handleSetCategory = async (e) => {
@@ -54,6 +58,11 @@ function Header(props) {
          searchParams.delete('id');
          searchParams.delete('name');
          setTitle('Tất cả');
+         setSearchParams(searchParams);
+      } else if (categoryId === 100 || categoryName === 'Product hot') {
+         searchParams.delete('id');
+         searchParams.set('name', 'get_product_hot');
+         setTitle('Product hot');
          setSearchParams(searchParams);
       } else {
          setTitle(categoryName);

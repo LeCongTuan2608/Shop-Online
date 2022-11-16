@@ -19,10 +19,10 @@ const formatCash = (str) => {
    return str?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 };
 function Order(props) {
-   const { value, stt, token, setLoading } = props;
+   const { value, token, setLoading } = props;
    const [infoBill, setInfoBill] = useState();
    useEffect(() => {
-      const fechInfoBill = async () => {
+      const fetchInfoBill = async () => {
          try {
             const response = await Bill.getById(value.billId, token);
             setInfoBill(response.data.result[0]);
@@ -32,7 +32,7 @@ function Order(props) {
             setLoading(false);
          }
       };
-      fechInfoBill();
+      fetchInfoBill();
    }, []);
    return (
       <Table striped bordered hover>
@@ -59,7 +59,7 @@ function Order(props) {
                         <span>{prod.amountPurchased}</span>
                      </td>
                      <td>
-                        <span>{formatCash(prod?.product?.productPrice)}</span>
+                        <span>{formatCash(prod?.product?.productPrice)}đ</span>
                      </td>
                   </tr>
                );
@@ -69,13 +69,22 @@ function Order(props) {
                   backgroundColor: 'rgb(13 110 253 / 20%)',
                }}>
                <th colSpan={3}>Total</th>
-               <th>{formatCash(infoBill?.totalPrice)}</th>
+               <th>{formatCash(infoBill?.totalPrice)}đ</th>
                <td
                   style={{
-                     color: infoBill?.status === 'SUCC' ? 'green' : 'red',
+                     color:
+                        infoBill?.status === 'PROCESSING'
+                           ? '#0d6efd'
+                           : infoBill?.status === 'SUCC'
+                           ? 'green'
+                           : 'red',
                      fontWeight: '500',
                   }}>
-                  {infoBill?.status === 'SUCC' ? 'Delivered' : 'Delivering'}
+                  {infoBill?.status === 'PROCESSING'
+                     ? 'Processing'
+                     : infoBill?.status === 'SUCC'
+                     ? 'Delivered'
+                     : 'Delivering'}
                </td>
             </tr>
          </tbody>
