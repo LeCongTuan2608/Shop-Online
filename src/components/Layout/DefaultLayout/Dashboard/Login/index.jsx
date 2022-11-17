@@ -12,6 +12,7 @@ import SignUp from '../SignUp';
 import styles from './Login.module.scss';
 import PropTypes from 'prop-types';
 import categorySlice from '../../../../../Slide/CategorySlide';
+import { useNavigate } from 'react-router-dom';
 const cln = classNames.bind(styles);
 Login.propTypes = {
    setLogin: PropTypes.func,
@@ -30,7 +31,7 @@ function Login(props) {
    const [loading, setLoading] = useState(false);
    const [errorss, setErrorss] = useState(false);
    const [text, setText] = useState('');
-
+   const navigate = useNavigate();
    const handleShow = () => {
       setModalShow(true);
    };
@@ -54,6 +55,7 @@ function Login(props) {
          });
          if (window.localStorage.getItem('token')) {
             setModalShow(false);
+            navigate('/');
          } else if (fetchLogin === 'LOGIN FAIL!') {
             setErrorss(true);
             setText('wrong email or password!!');

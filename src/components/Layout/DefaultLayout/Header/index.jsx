@@ -5,7 +5,7 @@ import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
 import { useEffect, useRef, useState } from 'react';
 import { Button, Dropdown, DropdownButton, Form, InputGroup } from 'react-bootstrap';
-import { useLocation, useSearchParams } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import styles from './Header.module.scss';
 import { useDispatch } from 'react-redux';
 import dashboard from '../../../../Slide/Dashboard';
@@ -24,26 +24,22 @@ function Header(props) {
    const [categories, setCategories] = useState([]);
    const timing = useRef(null);
    const [keyword, setKeyWord] = useState('');
+   const navigate = useNavigate();
    const dispatch = useDispatch();
 
    useEffect(() => {
       const q = searchParams.get('q');
       const id = searchParams.get('id');
       const name = searchParams.get('name');
-
-      if (id || name || q) {
-         setTitle(name);
+      if (id || q) {
+         setTitle(q);
       } else {
          setTitle('Tất cả');
       }
       const fetchCategory = async () => {
          try {
             const response = await Category.getAll();
-            setCategories([
-               { categoryId: 0, categoryName: 'Tất cả' },
-               { categoryId: 100, categoryName: 'Product hot' },
-               ...response.data.result,
-            ]);
+            setCategories([{ categoryId: 0, categoryName: 'Tất cả' }, ...response.data.result]);
          } catch (error) {
             console.log('error', error);
          }
@@ -54,15 +50,11 @@ function Header(props) {
    const handleSetCategory = async (e) => {
       const categoryId = e.target.attributes.categoryid.value;
       const categoryName = e.target.attributes.categoryname.value;
+
       if (categoryId === 0 || categoryName === 'Tất cả') {
          searchParams.delete('id');
          searchParams.delete('name');
          setTitle('Tất cả');
-         setSearchParams(searchParams);
-      } else if (categoryId === 100 || categoryName === 'Product hot') {
-         searchParams.delete('id');
-         searchParams.set('name', 'get_product_hot');
-         setTitle('Product hot');
          setSearchParams(searchParams);
       } else {
          setTitle(categoryName);
@@ -77,6 +69,11 @@ function Header(props) {
          clearTimeout(timing.current);
       }
       timing.current = setTimeout(() => {
+         const list = searchParams.get('list');
+         if (list === 'get_product_hot') {
+            searchParams.delete('list');
+            setSearchParams(searchParams);
+         }
          if (e.target.value === '') {
             searchParams.delete('q');
          } else {

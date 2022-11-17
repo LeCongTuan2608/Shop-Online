@@ -36,10 +36,17 @@ function BillPage(props) {
                response = await Bill.getProcess(token);
             } else if (q === 'delivered') {
                response = await Bill.getSuccess(token);
+            } else if (q === 'processing') {
+               response = await Bill.getAll(token);
             } else {
                response = await Bill.getAll(token);
             }
-            setBills(response.data.result.reverse());
+            if (q === 'processing') {
+               const processing = response.data.result.filter((val) => val.status === 'PROCESSING');
+               setBills(processing);
+            } else {
+               setBills(response.data.result.reverse());
+            }
             setLoading(false);
          } catch (error) {
             console.log('error', error);
@@ -55,6 +62,9 @@ function BillPage(props) {
       } else if (e.target.id === 'delivered') {
          setTitle('Delivered');
          searchParams.set('q', 'delivered');
+      } else if (e.target.id === 'processing') {
+         setTitle('Processing');
+         searchParams.set('q', 'processing');
       } else {
          setTitle('All');
          searchParams.delete('q');
@@ -84,7 +94,7 @@ function BillPage(props) {
                   variant="outline-primary"
                   id="dropdown-basic-button"
                   title={`${title} (${bills?.length})`}>
-                  <Dropdown.Item id="delivering" onClick={handleClick}>
+                  <Dropdown.Item id="processing" onClick={handleClick}>
                      Processing
                   </Dropdown.Item>
                   <Dropdown.Item id="delivering" onClick={handleClick}>
