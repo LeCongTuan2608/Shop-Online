@@ -90,7 +90,7 @@ function AddProduct(props) {
       amount: '',
    };
    // sự kiện submit form
-   const handleSubmitForm = async (value) => {
+   const handleSubmitForm = async (value, { resetForm }) => {
       const token = {
          tokenType: window.localStorage.getItem('tokenType'),
          token: window.localStorage.getItem('token'),
@@ -114,9 +114,12 @@ function AddProduct(props) {
          try {
             setLoading(true);
             const product = await Product_API.add(data, token);
-            console.log('product', product);
             setSuccess({ status: true, message: product.data.message, color: 'green' });
             setLoading(false);
+            resetForm({ values: '' });
+            setTimeout(() => {
+               setSuccess({ ...success, message: '' });
+            }, 3000);
          } catch (error) {
             setLoading(false);
             console.log('error', error);
